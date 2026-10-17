@@ -2240,6 +2240,8 @@ var CONTACT = { email: "kaitrosebd@gmail.com", linkedin: "https://www.linkedin.c
   var yesBtn = document.getElementById('kh-yes'), lzBtn = document.getElementById('kh-lz'), noBtn = document.getElementById('kh-no');
   var ldot = document.getElementById('kh-laser'), lbtn = document.getElementById('kh-laser-btn'), lnav = document.getElementById('kh-laser-nav'), backBtn = document.getElementById('kh-back');
   var finePtr = !reduce && !!(window.matchMedia && window.matchMedia('(pointer: fine)').matches);
+  var touchPtr = !reduce && !finePtr && !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  var laserOK = finePtr || touchPtr;
   var EXT = { stub: -14, peek: -14, hover: 26, invite: 64 };
   var SP = {
     r: { u: 0.5, px: 506, pxh: 197, cuts: [100, 290], palm: [386, 79], el: [0, 1, 2].map(function (i) { return document.getElementById('kh-r' + i); }) },
@@ -2262,7 +2264,7 @@ var CONTACT = { email: "kaitrosebd@gmail.com", linkedin: "https://www.linkedin.c
   var dwell = 0, lpx = 0, lpy = 0, lungeStart = 0, lungeEnd = 0, lungeTX = 0, lungeTY = 0, nextLunge = 0, holdUntil = 0, holdX = 0, holdY = 0, laser = false, lx = -99, ly = -99, lmove = 0, lcatch = 0, swat = 0, sayT = 0, sayCount = 0, lastSay = 0, invT = 0, invCount = 0, hoverT = 0, leaveT = 0;
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function vwid() { return document.documentElement.clientWidth; }
-  function reach() { return clamp(vwid() * 0.24, 150, 420); }
+  function reach() { return touchPtr ? clamp(vwid() * 1.02, 190, 440) : clamp(vwid() * 0.24, 150, 420); }
   function scrollY() {
     var de = document.documentElement, mx = Math.max(1, de.scrollHeight - window.innerHeight), p = clamp(window.scrollY / mx, 0, 1), vh = window.innerHeight;
     return clamp(vh * 0.26 + p * vh * 0.5, 130, vh - 170);
@@ -2363,7 +2365,7 @@ var CONTACT = { email: "kaitrosebd@gmail.com", linkedin: "https://www.linkedin.c
   }
   function showSay(text, o) {
     o = o || {}; palText.textContent = text;
-    yesBtn.hidden = false; lzBtn.hidden = !finePtr; noBtn.hidden = false;
+    yesBtn.hidden = false; lzBtn.hidden = !laserOK; noBtn.hidden = false;
     palSay.querySelector('.kh-say-actions').hidden = !!o.plain; palSay.setAttribute('data-plain', o.plain ? '1' : ''); palSay.setAttribute('data-thought', o.thought ? '1' : ''); palSay.classList.toggle('thought', !!o.thought);
     lzBtn.textContent = laser ? 'Laser off' : 'Laser';
     palSay.hidden = false; placeSay(); clearTimeout(sayT); sayT = setTimeout(hideSay, o.ms || 9000); lastSay = Date.now();
@@ -2385,8 +2387,8 @@ var CONTACT = { email: "kaitrosebd@gmail.com", linkedin: "https://www.linkedin.c
   if (openLink) openLink.hidden = false;
   /* laser: the red dot follows the pointer, the paw reaches for it, and a still dot gets swatted */
   function laserOn() {
-    if (!finePtr || off) return; laser = true; lmove = Date.now(); holdUntil = 0; swat = 0;
-    ldot.classList.remove('caught'); lx = ptrX > 0 ? ptrX : window.innerWidth / 2; ly = ptrY > 0 ? ptrY : window.innerHeight / 2;
+    if (!laserOK || off) return; laser = true; lmove = Date.now(); holdUntil = 0; swat = 0;
+    ldot.classList.remove('caught'); lx = ptrX > 0 ? ptrX : (touchPtr ? vwid() * 0.6 : window.innerWidth / 2); ly = ptrY > 0 ? ptrY : (touchPtr ? window.innerHeight * 0.55 : window.innerHeight / 2);
     ldot.style.transform = 'translate3d(' + lx + 'px,' + ly + 'px,0)'; lbtn.setAttribute('aria-pressed', 'true'); lbtn.textContent = 'Laser off'; lnav.setAttribute('aria-pressed', 'true');
     ldot.hidden = false; loop(); showSay(pick(LINES.laser), { ms: 4500, plain: true });
   }
@@ -2395,8 +2397,20 @@ var CONTACT = { email: "kaitrosebd@gmail.com", linkedin: "https://www.linkedin.c
     if (!quietly) showSay(pick(LINES.laserOff), { ms: 3200, plain: true });
   }
   var ptrX = -1, ptrY = -1;
-  if (finePtr) {
+  if (laserOK) {
     document.addEventListener('pointermove', function (e) { ptrX = e.clientX; ptrY = e.clientY; }, { passive: true });
+    if (touchPtr) {
+      /* a finger drives the dot: touch it, drag it, and the page still scrolls under it */
+      var touchDot = function (e) {
+        var t = e.touches && e.touches[0]; if (!t) return;
+        ptrX = t.clientX; ptrY = t.clientY;
+        if (!laser || Date.now() < holdUntil) return;
+        lx = t.clientX; ly = t.clientY; lmove = Date.now();
+        ldot.style.transform = 'translate3d(' + lx + 'px,' + ly + 'px,0)';
+      };
+      document.addEventListener('touchstart', touchDot, { passive: true });
+      document.addEventListener('touchmove', touchDot, { passive: true });
+    }
     lbtn.hidden = false; lnav.hidden = false;
     lbtn.addEventListener('click', function () { if (laser) laserOff(); else { if (off) quiet(false, true); laserOn(); } });
     lnav.addEventListener('click', function () { if (laser) laserOff(); else { if (off) quiet(false, true); laserOn(); } });
@@ -2413,12 +2427,12 @@ var CONTACT = { email: "kaitrosebd@gmail.com", linkedin: "https://www.linkedin.c
     if (on) {
       off = true; clearTimeout(invT); hideSay(); if (laser) laserOff(true);
       setMode('stub'); pawBtn.setAttribute('aria-label', 'A stray paw. Bring the break room back');
-      openLink.hidden = true; lbtn.hidden = !finePtr; lnav.hidden = !finePtr; backBtn.hidden = false;
+      openLink.hidden = true; lbtn.hidden = !laserOK; lnav.hidden = !laserOK; backBtn.hidden = false;
       try { sessionStorage.setItem('kh-pal-off', '1'); } catch (e) {}
     } else {
       off = false; sayCount = 0; invCount = 0; lastSay = 0;
       try { sessionStorage.removeItem('kh-pal-off'); } catch (e) {}
-      backBtn.hidden = true; openLink.hidden = false; lbtn.hidden = !finePtr; lnav.hidden = !finePtr;
+      backBtn.hidden = true; openLink.hidden = false; lbtn.hidden = !laserOK; lnav.hidden = !laserOK;
       pawBtn.setAttribute('aria-label', 'Need a break? Open the break room');
       setMode('invite'); showSay(pick(LINES.back), { ms: 6000 });
       armInvite(60000);
