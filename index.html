@@ -89,6 +89,12 @@ p{margin:0 0 1em}
 .nav .tools-r{display:flex; align-items:center; gap:10px; flex-wrap:nowrap; flex:none}
 .theme{display:inline-flex; align-items:center; gap:8px; padding:9px 14px; border-radius:999px; border:1px solid var(--line); background:var(--wash); color:var(--ink); font:600 15px var(--body); cursor:pointer}
 .theme:hover{background:var(--wash-2)}
+.nav-laser{display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; padding:0; border-radius:50%; border:1px solid var(--line); background:var(--wash); color:var(--muted); cursor:pointer; transition:background .2s, color .2s, box-shadow .2s}
+.nav-laser[hidden]{display:none}
+.nav-laser svg{width:20px; height:20px}
+.nav-laser:hover{background:var(--wash-2); color:var(--ink)}
+.nav-laser[aria-pressed="true"]{color:var(--ink); border-color:#FF4D7A; box-shadow:0 0 0 3px rgba(255,77,122,.22)}
+.nav-laser:focus-visible{outline:2px solid var(--violet); outline-offset:2px}
 .theme svg{width:18px; height:18px; flex:none}
 .journey{font-size:14px; font-weight:600; color:var(--muted); white-space:nowrap}
 .nav ul a.seen::after{content:""; display:inline-block; width:6px; height:6px; margin-left:8px; border-radius:50%; background:var(--mint); vertical-align:2px}
@@ -326,6 +332,197 @@ details .muted{color:var(--muted)}
 .vmore{margin:28px 0 0}
 @media (prefers-reduced-motion: reduce){.vault,.vault .go{transition:none}.vault:hover{transform:none}}
 
+/* break room: the scroll-following cat + games dialog */
+.wr-link{display:none; padding:0; border:0; background:none; font:inherit; color:var(--muted); cursor:pointer; text-decoration:underline dotted; text-underline-offset:4px}
+.js .wr-link{display:inline}
+.wr-link:hover,.wr-link:focus-visible{color:var(--ink)}
+.kh-pal{position:fixed; inset:0; z-index:30; pointer-events:none; transition:opacity .3s}
+.kh-pal.away{opacity:0; visibility:hidden}
+.kh-arm{position:absolute; left:0; top:0; width:100%; height:100%; overflow:visible; pointer-events:none}
+.kh-arm .a-fur{fill:#3b2a94; stroke:#cdbdff; stroke-width:2.2; stroke-linejoin:round; stroke-linecap:round}
+.kh-arm .a-shade{fill:rgba(20,12,70,.45); stroke:none}
+.kh-arm .a-arm{fill:#5043a9; stroke:none}
+
+.kh-arm .a-bean{fill:#c76aa3}
+.kh-arm .a-toe{fill:none; stroke:#cdbdff; stroke-width:1.6; stroke-linecap:round; opacity:.8}
+:root[data-theme="light"] .kh-arm .a-fur{fill:#5a46c8; stroke:#2b1d7a}
+:root[data-theme="light"] .kh-arm .a-toe{stroke:#e7defe}
+.kh-paw-btn{position:absolute; left:0; top:0; width:60px; height:60px; margin:-30px 0 0 -30px; padding:0; border:0; border-radius:50%; background:none; cursor:pointer; pointer-events:auto; -webkit-tap-highlight-color:transparent; will-change:transform}
+.kh-paw-btn:focus-visible{outline:2px solid var(--violet); outline-offset:2px}
+.kh-say{position:absolute; left:64px; top:0; pointer-events:auto; width:max-content; max-width:min(290px, calc(100vw - 120px)); padding:10px 12px 10px 14px; border-radius:2px 12px 12px 12px; background:var(--panel); border:1px solid var(--line); box-shadow:0 12px 36px rgba(0,0,0,.35); animation:kh-pop .3s ease-out}
+.kh-say[hidden]{display:none}
+.kh-say.thought{border-radius:22px; padding:11px 18px; font-style:italic}
+.kh-say.thought::before,.kh-say.thought::after{content:""; position:absolute; border-radius:50%; background:var(--panel); border:1px solid var(--line)}
+.kh-say.thought::before{left:20px; bottom:-15px; width:12px; height:12px}
+.kh-say.thought::after{left:8px; bottom:-27px; width:7px; height:7px}
+.kh-say p{margin:0 0 9px; font-weight:600; font-size:15.5px; line-height:1.35}
+.kh-say-actions[hidden]{display:none}
+.kh-say-actions{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.kh-say .btn{padding:7px 14px; font-size:14px; border-width:1px}
+.kh-x{margin-left:auto; padding:4px 8px; border:0; background:none; color:var(--muted); font:600 13px var(--body); cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px}
+.kh-x:hover,.kh-x:focus-visible{color:var(--ink)}
+@keyframes kh-pop{from{opacity:0; transform:translateX(-8px) scale(.94)}to{opacity:1; transform:none}}
+/* the mascot: painted sprites from the Canva sheet, crossfaded, with spring motion */
+.kt{position:relative; display:block; width:100%; height:100%; transform-origin:50% 100%; will-change:transform; transition:transform .16s ease-out}
+.kt img{position:absolute; left:50%; bottom:0; height:auto; max-width:none; opacity:0; pointer-events:none; user-select:none; -webkit-user-drag:none; transform-origin:50% 50%; transform:translateX(-50%) scaleX(var(--fx,1)); transition:opacity .32s ease, rotate .45s cubic-bezier(.3,.7,.3,1); filter:drop-shadow(0 6px 12px rgba(96,64,255,.38))}
+:root[data-theme="light"] .kt img{filter:drop-shadow(0 5px 8px rgba(40,20,110,.28))}
+.kt.r .nl,.kt:not(.r) .nr{--fx:-1}
+.kt[data-pz="sit"] .pz-sit,.kt[data-pz="stretch"] .pz-stretch,.kt[data-pz="arch"] .pz-arch,.kt[data-pz="curl"] .pz-curl,.kt[data-pz="groom"] .pz-groom,.kt[data-pz="butt"] .pz-butt,.kt[data-pz="swat"] .pz-swat,.kt[data-pz="walk"] .pz-walk,.kt[data-pz="climb"] .pz-climb{opacity:1}
+.kt.down .pz-climb{rotate:180deg}
+.kt[data-pz="sit"] .pz-sit{animation:kt-breathe 4.4s ease-in-out infinite}
+.kt[data-pz="curl"] .pz-curl{animation:kt-breathe 3.2s ease-in-out infinite}
+.kt[data-pz="butt"] .pz-butt{animation:kt-sway 1.6s ease-in-out infinite alternate}
+.kt[data-pose="stare"]{scale:1.04}
+.kt.pop{animation:kt-pop .55s cubic-bezier(.22,.8,.3,1)}
+.kt.land{animation:kt-land .36s ease-out}
+.kh-cat:hover .kt{scale:1.035}
+@keyframes kt-pop{0%{scale:.985 .965}100%{scale:1 1}}
+@keyframes kt-land{0%{scale:1.03 .96}100%{scale:1 1}}
+@keyframes kt-breathe{0%,100%{scale:1 1}50%{scale:1 1.016}}
+@keyframes kt-sway{from{rotate:-2deg}to{rotate:2deg}}
+.kh-laser{position:fixed; left:0; top:0; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%; background:#FF4D7A; box-shadow:0 0 12px 4px rgba(255,77,122,.7),0 0 30px 10px rgba(255,77,122,.3); pointer-events:none; z-index:55; transition:opacity .2s}
+.kh-laser[hidden]{display:none}
+.kh-laser.away{opacity:0}
+
+.kh-laser.caught{animation:kh-caught 1.5s ease-out forwards}
+@keyframes kh-caught{0%{scale:1; opacity:1}14%{scale:2.8; opacity:.95}45%{scale:1.2; opacity:.8}100%{scale:.1; opacity:0}}
+.kh-chip{position:fixed; z-index:29; padding:4px 10px; border-radius:8px; background:var(--panel); border:1px solid var(--mint); color:var(--ink); font:700 12px var(--body); pointer-events:none; white-space:nowrap}
+.wr-plug{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px 16px; margin-top:18px; padding:12px 14px; border-radius:16px; border:1px dashed var(--line); background:var(--wash)}
+.wr-plug p{margin:0; flex:1 1 220px; font-size:15px; line-height:1.4; color:var(--muted)}
+.wr-plug .btn{padding:8px 16px; font-size:14.5px; border-width:1px}
+@keyframes kh-ping{0%{box-shadow:0 0 0 0 rgba(128,243,204,.7)}100%{box-shadow:0 0 0 10px rgba(128,243,204,0)}}
+.wr-dialog{width:min(700px, calc(100% - 24px)); max-height:calc(100dvh - 24px); padding:0; margin:auto; overflow:auto; color:var(--ink); border:1px solid transparent; border-radius:26px;
+  background:linear-gradient(var(--panel), var(--panel)) padding-box, linear-gradient(135deg, var(--violet), var(--sky), var(--mint)) border-box}
+.wr-dialog::backdrop{background:rgba(6,3,12,.72); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px)}
+html:has(.wr-dialog[open]){overflow:hidden}
+.wr{position:relative; padding:26px 26px 22px}
+.wr .eyebrow{margin-bottom:8px}
+.wr h2{font-size:clamp(30px,5vw,44px)}
+.wr-sub{margin:8px 0 14px; color:var(--muted); font-size:17px; max-width:34em}
+.wr-close{position:absolute; top:16px; right:16px; padding:7px 14px; border-radius:999px; border:1px solid var(--line); background:var(--wash); color:var(--ink); font:600 14.5px var(--body); cursor:pointer}
+.wr-close:hover{background:var(--wash-2)}
+.wr-top{display:flex; gap:12px; justify-content:space-between; margin:0}
+.wr-stat{margin:0; flex:1; padding:10px 14px; border-radius:14px; background:var(--wash); border:1px solid var(--line)}
+.wr-stat span{display:block; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); line-height:1.3}
+.wr-stat b{display:block; font-family:var(--display); font-weight:400; font-size:34px; line-height:1.1; color:var(--mint)}
+.wr-stage{position:relative; margin-top:6px}
+.wr-host{position:relative; height:92px; margin:0 0 -2px; pointer-events:none}
+.wr-cat{position:absolute; right:10px; bottom:0; width:140px; height:88px; z-index:0; pointer-events:none; overflow:visible}
+.wr-cat[data-mood="oops"]{filter:hue-rotate(-30deg) saturate(1.3)}
+.wr-say{position:absolute; right:156px; bottom:28px; z-index:2; max-width:min(300px, calc(100% - 170px)); margin:0; padding:7px 13px; border-radius:16px 16px 4px 16px; background:var(--panel); border:1px solid var(--line); font-size:14.5px; font-weight:600; line-height:1.3; opacity:0; transform:translateY(6px); transition:opacity .2s, transform .2s; pointer-events:none}
+.wr-say.on{opacity:1; transform:none}
+.wr-board{position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+.hole{position:relative; overflow:hidden; aspect-ratio:1.75; padding:0; border-radius:18px; border:1px solid var(--line); cursor:pointer; font:inherit; color:inherit; -webkit-tap-highlight-color:transparent;
+  background:radial-gradient(ellipse 70% 45% at 50% 100%, rgba(0,0,0,.5), transparent 75%), var(--wash)}
+.hole:focus-visible{outline:2px solid var(--violet); outline-offset:2px}
+.hole .wr-card{position:absolute; inset:8px; display:flex; flex-direction:column; justify-content:center; gap:3px; padding:8px 10px; text-align:left; border-radius:12px; overflow:hidden;
+  background:var(--panel); border:1px solid var(--line); transform:translateY(115%); animation:wr-up .2s ease-out forwards}
+.hole .wr-card.real{border-color:var(--mint); box-shadow:0 0 0 1px var(--mint), 0 0 16px rgba(128,243,204,.3)}
+.hole .wr-card.out{animation:wr-down .2s ease-in forwards}
+.hole .wr-head{display:flex; align-items:center; gap:6px}
+.hole .wr-tag{font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--violet); line-height:1.2}
+.hole .wr-card.real .wr-tag{color:var(--mint)}
+.hole .wr-p0{font-size:10px; font-weight:800; letter-spacing:.06em; padding:1px 6px; border-radius:999px; background:#FF7A9A; color:#2A0712; line-height:1.4}
+.hole .wr-txt{font-size:clamp(12px,1.9vw,14.5px); font-weight:600; line-height:1.25; color:var(--ink)}
+.bg-alert{position:fixed; inset:0; z-index:60; display:grid; place-items:center; padding:16px; background:rgba(8,5,20,.78); backdrop-filter:blur(3px)}
+.bg-alert[hidden]{display:none}
+.bg-alert-box{position:relative; width:min(380px,100%); text-align:center; padding:22px 20px 20px; border-radius:20px; background:var(--panel); border:1px solid var(--violet); box-shadow:0 0 0 1px rgba(128,243,204,.25),0 20px 60px rgba(0,0,0,.55); animation:bg-rise .5s cubic-bezier(.2,1.3,.4,1) both}
+.bg-alert-cat{width:min(300px,100%); height:230px; margin:-4px auto 0}
+.bg-alert-box h3{margin:10px 0 6px; font-family:var(--serif,Georgia,serif); font-size:clamp(40px,12vw,56px); line-height:1; letter-spacing:.02em; background:linear-gradient(100deg,var(--violet),var(--sky),var(--mint)); -webkit-background-clip:text; background-clip:text; color:transparent}
+.bg-alert-box p{margin:0 0 16px; color:var(--muted); font-size:15px}
+@keyframes bg-rise{from{opacity:0; transform:translateY(24px) scale(.92)}to{opacity:1; transform:none}}
+.wr.calm .bg-alert-box,.calm .bg-alert-box{animation:none}
+.wr-pop{position:absolute; z-index:3; pointer-events:none; white-space:nowrap; padding:3px 10px; border-radius:999px; font-size:13px; font-weight:700; background:var(--panel); border:1px solid var(--line); color:var(--ink); animation:wr-pop .95s ease-out forwards}
+.wr-pop.bad{border-color:#FF7A9A; color:#FF7A9A}
+.wr-pop.good{border-color:var(--mint)}
+:root[data-theme="light"] .wr-pop.bad{color:#B3123F; border-color:#B3123F}
+.wr-msg{margin:18px 0 0; min-height:3.2em; font-size:17px; color:var(--muted)}
+.wr-update h3{font-family:var(--display); font-weight:400; font-size:26px; color:var(--ink); line-height:1.15; margin:0 0 2px}
+.wr-update .wr-joke{margin:0 0 12px; color:var(--muted); font-size:16px}
+.wr-update dl{display:grid; grid-template-columns:auto 1fr; gap:6px 16px; margin:0; padding:14px 16px; border-radius:14px; background:var(--wash); border:1px solid var(--line); font-size:15.5px}
+.wr-update .wr-note{grid-column:1/-1; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.wr-update dt{color:var(--muted); font-weight:600}
+.wr-update dd{margin:0; color:var(--ink)}
+.wr-update .rag{display:inline-block; padding:0 10px; border-radius:999px; font-weight:800; font-size:13px; letter-spacing:.06em; text-transform:uppercase}
+.wr-update .rag.g{background:var(--mint); color:#04170F}
+.wr-update .rag.a{background:#FFC857; color:#2A1B00}
+.wr-update .rag.r{background:#FF7A9A; color:#2A0712}
+.wr-controls{display:flex; flex-wrap:wrap; align-items:center; gap:14px 22px; margin-top:8px}
+.wr-relax{display:inline-flex; align-items:center; gap:8px; font-size:15.5px; color:var(--muted); cursor:pointer}
+.wr-relax input{width:18px; height:18px; accent-color:var(--violet)}
+.wr-help{margin:14px 0 0; font-size:14.5px; color:var(--muted); line-height:1.5}
+.wr.calm .wr-cat *{animation:none !important}
+.wr.calm .hole .wr-card{transform:none; animation:wr-fade .15s ease-out forwards}
+.wr.calm .hole .wr-card.out{animation:wr-fadeout .15s ease-in forwards}
+.wr.calm .wr-pop{animation:wr-fadepop .95s linear forwards}
+@keyframes wr-up{from{transform:translateY(115%)}to{transform:translateY(0)}}
+@keyframes wr-down{from{transform:translateY(0)}to{transform:translateY(115%)}}
+@keyframes wr-fade{from{opacity:0}to{opacity:1;transform:none}}
+@keyframes wr-fadeout{from{opacity:1;transform:none}to{opacity:0;transform:none}}
+@keyframes wr-pop{0%{opacity:0; transform:translateY(8px) scale(.9)}15%{opacity:1; transform:translateY(0) scale(1)}80%{opacity:1}100%{opacity:0; transform:translateY(-22px)}}
+@keyframes wr-fadepop{0%{opacity:0}15%{opacity:1}80%{opacity:1}100%{opacity:0}}
+@keyframes wr-wag{from{transform:rotate(-7deg)}to{transform:rotate(11deg)}}
+@keyframes wr-blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+@keyframes wr-swat{0%{transform:translate(0,0) rotate(0)}45%{transform:translate(-14px,-16px) rotate(-24deg)}100%{transform:translate(0,0) rotate(0)}}
+@media (max-width:520px){
+  .wr{padding:20px 14px 18px}
+  .wr-close{top:12px; right:12px}
+  .wr-stat{padding:8px 10px}
+  .wr-stat b{font-size:28px}
+  .wr-board{gap:8px}
+  .hole{aspect-ratio:1; border-radius:14px}
+  .hole .wr-card{inset:5px; padding:6px 7px}
+  .hole .wr-tag{font-size:10px}
+  .hole .wr-txt{font-size:12px}
+  .wr-host{height:66px}
+  .wr-cat{width:100px; height:62px; right:4px}
+  .wr-say{right:112px; bottom:16px; font-size:13px; max-width:calc(100% - 120px)}
+  .kh-paw-btn{width:48px; height:48px; margin:-24px 0 0 -24px}
+}
+@media (prefers-reduced-motion: reduce){
+  .kt *,.kh-say{animation:none !important}
+  .wr-say{transition:none}
+}
+
+.wr [hidden]{display:none !important}
+.made{flex-basis:100%; margin-top:4px; font-size:14.5px}
+.wr-tabrow{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 18px; margin:14px 0 4px}
+.wr-tabs{display:inline-flex; gap:4px; padding:4px; border-radius:999px; background:var(--wash); border:1px solid var(--line)}
+.wr-tab{padding:8px 16px; border:0; border-radius:999px; background:none; color:var(--muted); font:600 15px var(--body); cursor:pointer}
+.wr-tab[aria-selected="true"]{background:var(--btn); color:var(--btn-ink)}
+.wr-tab:focus-visible{outline:2px solid var(--violet); outline-offset:2px}
+.est-ticket{position:relative; margin-top:14px; padding:18px 20px 22px; border-radius:18px; background:var(--wash); border:1px solid var(--line); overflow:hidden}
+.est-who{margin:0 0 4px; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--violet)}
+.est-title{margin:0; font-family:var(--display); font-size:clamp(22px,3.6vw,30px); line-height:1.15}
+.est-bar{position:absolute; left:0; right:0; bottom:0; height:5px; background:var(--track)}
+.est-bar i{display:block; height:100%; width:100%; background:linear-gradient(90deg,var(--mint),var(--sky),var(--violet)); transform-origin:left}
+.est-cards{display:grid; grid-template-columns:repeat(8,1fr); gap:8px; margin-top:14px}
+.est-card{aspect-ratio:.78; display:grid; place-items:center; padding:0; border-radius:14px; border:1px solid var(--line); background:var(--panel); color:var(--ink); font:400 clamp(22px,4vw,32px) var(--display); cursor:pointer; transition:transform .15s, border-color .15s}
+.est-card:hover:not(:disabled){transform:translateY(-4px); border-color:var(--hover-line)}
+.est-card:disabled{cursor:default}
+.est-card:focus-visible{outline:2px solid var(--violet); outline-offset:2px}
+.est-card.right{border-color:var(--mint); box-shadow:0 0 0 2px var(--mint), 0 0 18px rgba(128,243,204,.35)}
+.est-card.picked:not(.right){border-color:#FF7A9A; box-shadow:0 0 0 2px #FF7A9A}
+.est-card.dim{opacity:.45}
+.wr.calm .est-card{transition:none}
+.wr.calm .est-card:hover:not(:disabled){transform:none}
+@media (max-width:520px){.est-cards{gap:5px}.est-card{border-radius:10px}.wr-tab{padding:7px 12px; font-size:14px}}
+.bg-card{margin-top:10px; padding:16px 16px 12px; border-radius:20px; border:1px solid var(--line); background:linear-gradient(160deg,var(--panel),var(--wash))}
+.bg-head{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:12px}
+.bg-head h3{margin:0; font:400 clamp(24px,4.6vw,34px) var(--display)}
+.bg-code{font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--violet)}
+.bg-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:8px}
+.bg-cell{position:relative; height:clamp(60px,12vw,100px); padding:3px; display:grid; place-items:center; text-align:center; border-radius:12px; border:1px solid var(--line); background:var(--panel); color:var(--ink); font:700 clamp(11px,2.1vw,15.5px)/1.18 var(--body); overflow-wrap:anywhere; cursor:pointer; transition:transform .15s, border-color .15s, background .2s}
+.bg-cell:hover:not(.on):not(.free){transform:translateY(-3px); border-color:var(--hover-line)}
+.bg-cell:focus-visible{outline:2px solid var(--violet); outline-offset:2px}
+.bg-cell.free{border-style:dashed; color:var(--violet); cursor:default}
+.bg-cell.on{background:var(--btn); color:var(--btn-ink); border-color:transparent}
+.bg-cell.on::after{content:"\2713"; position:absolute; top:2px; right:5px; font-size:10px; font-weight:800}
+.bg-cell.line{box-shadow:0 0 0 2px var(--mint), 0 0 18px rgba(128,243,204,.4)}
+.bg-foot{display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; margin-top:12px; font-size:12.5px; color:var(--muted)}
+.wr.calm .bg-cell{transition:none}
+.wr.calm .bg-cell:hover:not(.on):not(.free){transform:none}
+@media (max-width:520px){.wr-tabs{width:100%}.wr-tab{flex:1; white-space:nowrap; padding:7px 4px; font-size:12.5px}.bg-card{padding:12px 10px 10px}.bg-grid{gap:5px}.bg-cell{border-radius:10px}}
 /* toolkit */
 .kit{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px}
 .kit .glass{padding:24px 26px}
@@ -473,6 +670,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px
     </nav>
     <div class="tools-r">
       <span class="journey" id="journey" aria-hidden="true"></span>
+      <button class="nav-laser" id="kh-laser-nav" type="button" hidden aria-pressed="false" aria-label="Laser pointer" title="Laser pointer (shh, it is a toy)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".55"/><circle cx="12" cy="12" r="4.2" fill="#FF4D7A"/><circle cx="10.8" cy="10.8" r="1.2" fill="#fff"/></svg></button>
       <button class="theme" id="theme" type="button" hidden>
         <svg id="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg id="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -495,7 +693,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px
       <div>
         <p class="eyebrow">Senior product manager &middot; Portland, Oregon</p>
         <h1>Customer-first product for the <em class="grad-text">creative and entertainment</em> world.</h1>
-        <p class="lede">I spent seven and a half years at CD Baby, through two acquisitions (first Downtown Music and then Virgin Music Group, part of UMG), building the platforms, pricing and policies that 2 million independent artists and more than 100 partners counted on globally. I always begin with the customer and the support team closest to them, because they know exactly where things get stuck, and from there I work side by side every day with engineers, designers, data, finance, fraud, legal, marketing and executives to make the product better in whatever way it needs, whether that is a fix, a faster path, a safer one, a new feature or a fresh rebuild. Music is where I learned all of this, and I would happily bring it to anything with customers, payments, risk and a lot of complicated rules.</p>
+        <p class="lede">I spent over 10 years at CD Baby, the last seven and a half in product, through two acquisitions. I built the platforms, tools, pricing and policies that independent artists and 100+ partners counted on, and I led the company's first AI quality control system. I start with the teams closest to the customer, because they know where things get stuck and are usually too polite to say "I told you so." I would happily bring that approach to anything with customers, payments, risk and a lot of complicated rules (yes, I enjoy them).</p>
         <ul class="chips" aria-label="Focus areas">
           <li>Marketplace and platform products</li><li>Payments and payouts</li><li>Trust, fraud and risk</li><li>Operations and support tooling</li><li>Data, rules and compliance</li><li>AI-assisted workflows</li>
         </ul>
@@ -1059,7 +1257,117 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px
     <footer>
       <span>&copy; 2026 Kaitlin Hartford</span>
       <span>Portland, Oregon</span>
+      <button class="wr-link" type="button" id="wr-open" hidden>Need a break?</button>
+      <button class="wr-link" type="button" id="kh-laser-btn" hidden aria-pressed="false">Laser pointer</button>
+      <button class="wr-link" type="button" id="kh-back" hidden>Take a break</button>
+      <span class="made">Product-managed, designed and built by Kaitlin with Claude Code, Canva, then shipped through GitHub and Netlify. Yes, including the cat.</span>
     </footer>
+    <dialog class="wr-dialog" id="wr-dialog" aria-labelledby="wr-title">
+      <div class="wr" id="wr" data-state="idle">
+        <button class="wr-close" type="button" id="wr-close">Close</button>
+        <p class="eyebrow">Break room</p>
+        <h2 id="wr-title">Three tiny games, zero meetings</h2>
+        <div class="wr-tabrow">
+          <div class="wr-tabs" role="tablist" aria-label="Pick a game">
+            <button class="wr-tab" type="button" role="tab" id="tab-a" aria-selected="true" aria-controls="wr-panel-a">Whack-a-Request</button>
+            <button class="wr-tab" type="button" role="tab" id="tab-b" aria-selected="false" aria-controls="est" tabindex="-1">Estimate It</button>
+            <button class="wr-tab" type="button" role="tab" id="tab-c" aria-selected="false" aria-controls="bingo" tabindex="-1">Standup Bingo</button>
+          </div>
+          <label class="wr-relax"><input type="checkbox" id="wr-relax"> Relaxed pace</label>
+        </div>
+        <div class="wr-host" id="wr-host"><p class="wr-say" id="wr-say" aria-hidden="true"></p></div>
+        <div id="wr-panel-a" role="tabpanel" aria-labelledby="tab-a">
+        <p class="wr-sub">Product management in 30 seconds. Park the noise and leave the customers alone. The cat is not helping.</p>
+        <div class="wr-top">
+          <p class="wr-stat"><span>Story points</span><b id="wr-score">0</b></p>
+          <p class="wr-stat"><span>Sprint ends in</span><b id="wr-time">30</b></p>
+          <p class="wr-stat"><span>Best velocity</span><b id="wr-best">0</b></p>
+        </div>
+        <div class="wr-stage">
+          <div class="wr-board" id="wr-board" role="group" aria-label="Request board. Keys 1 to 9 tap each hole."></div>
+        </div>
+        <div class="wr-msg" id="wr-msg" role="status" aria-live="polite">Ready when you are.</div>
+        <div class="wr-controls">
+          <button class="btn solid" type="button" id="wr-start">Start sprint</button>
+        </div>
+        <p class="wr-help">Tap a request to park it for +10. Tap a customer and you lose 20. Keyboard players can press the number keys 1 to 9.</p>
+        </div>
+        <div class="est" id="est" role="tabpanel" aria-labelledby="tab-b" hidden>
+          <p class="wr-sub">Planning poker, with fewer snacks. Pick an estimate before the timer runs out. The question mark is a real answer.</p>
+          <div class="wr-top">
+            <p class="wr-stat"><span>Story points</span><b id="est-score">0</b></p>
+            <p class="wr-stat"><span>Ticket</span><b id="est-n">0 / 8</b></p>
+            <p class="wr-stat"><span>Best</span><b id="est-best">0</b></p>
+          </div>
+          <div class="est-ticket" aria-live="off">
+            <p class="est-who" id="est-who">Backlog</p>
+            <p class="est-title" id="est-title">Press deal to get your first ticket.</p>
+            <div class="est-bar" aria-hidden="true"><i id="est-bar"></i></div>
+          </div>
+          <div class="est-cards" id="est-cards" role="group" aria-label="Estimate cards. Keys 1 to 8 pick a card."></div>
+          <div class="wr-msg" id="est-msg" role="status" aria-live="polite">Ready when you are.</div>
+          <div class="wr-controls">
+            <button class="btn solid" type="button" id="est-start">Deal the first ticket</button>
+            <button class="btn" type="button" id="est-next" hidden>Next ticket</button>
+          </div>
+          <p class="wr-help">Exactly right is +20. One card off is +10. Keys 1 to 8 pick the cards, left to right.</p>
+        </div>
+        <div class="est" id="bingo" role="tabpanel" aria-labelledby="tab-c" hidden>
+          <p class="wr-sub">Play it in your real standup. Your card is one of a kind. Tap a square when you hear it. Five in a row is a bingo, so screenshot your card and send it to the team.</p>
+          <div class="wr-top">
+            <p class="wr-stat"><span>Squares</span><b id="bg-count">1 / 25</b></p>
+            <p class="wr-stat"><span>Closest row</span><b id="bg-close">1 / 5</b></p>
+            <p class="wr-stat"><span>Bingos</span><b id="bg-bingos">0</b></p>
+          </div>
+          <div class="bg-card" id="bg-card">
+            <div class="bg-head"><h3>Standup Bingo</h3><span class="bg-code" id="bg-code">Card</span></div>
+            <div class="bg-grid" id="bg-grid" role="group" aria-label="Your bingo card. Tap a square when you hear it in your standup."></div>
+            <div class="bg-foot"><span>kaitlinhartford.netlify.app</span><span id="bg-foot">1 marked</span></div>
+          </div>
+          <div class="wr-msg" id="bg-msg" role="status" aria-live="polite">Ready when your standup is.</div>
+          <div class="wr-controls">
+            <button class="btn solid" type="button" id="bg-new">Deal a new card</button>
+            <button class="btn" type="button" id="bg-clear">Clear marks</button>
+          </div>
+          <div class="bg-alert" id="bg-alert" hidden role="alertdialog" aria-labelledby="bg-al-t" aria-describedby="bg-al-p">
+            <div class="bg-alert-box">
+              <div class="bg-alert-cat" id="bg-alert-cat" aria-hidden="true"></div>
+              <h3 id="bg-al-t">BINGO!</h3>
+              <p id="bg-al-p"></p>
+              <button class="btn solid" type="button" id="bg-al-ok">Back to the standup</button>
+            </div>
+          </div>
+          <p class="wr-help">Your card stays on your screen. Nothing is sent anywhere, and your teammates get their own card, so no two match.</p>
+        </div>
+        <div class="wr-plug"><p id="wr-plug-text">Kaitlin would be great at this game.</p><button class="btn" type="button" id="wr-plug-go">See Kaitlin's work</button></div>
+      </div>
+    </dialog>
+
+    <template id="kh-cat-tpl"></template>
+    <div class="kh-laser" id="kh-laser" hidden aria-hidden="true"></div>
+
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+      <linearGradient id="kl" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="150" y2="100"><stop offset="0" style="stop-color:var(--k1,#CDBEFF)"/><stop offset=".55" style="stop-color:var(--k2,#A48BFF)"/><stop offset="1" style="stop-color:var(--k3,#6FD3F5)"/></linearGradient>
+    </defs></svg>
+    <div class="kh-pal" id="kh-pal" hidden>
+      <svg class="kh-arm" id="kh-arm" aria-hidden="true" focusable="false">
+        <defs><linearGradient id="kh-fadeg" gradientUnits="userSpaceOnUse" x1="-96" y1="0" x2="-52" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient><mask id="kh-armfade" maskUnits="userSpaceOnUse" x="-900" y="-200" width="1000" height="400"><rect x="-900" y="-200" width="1000" height="400" fill="url(#kh-fadeg)"/></mask><linearGradient id="kh-clg" gradientUnits="userSpaceOnUse" x1="-62" y1="0" x2="-22" y2="0"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient><mask id="kh-clfade" maskUnits="userSpaceOnUse" x="-100" y="-100" width="250" height="220"><rect x="-100" y="-100" width="250" height="220" fill="url(#kh-clg)"/></mask><linearGradient id="kh-hg" gradientUnits="userSpaceOnUse" x1="-48" y1="0" x2="-24" y2="0"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient><mask id="kh-hfade" maskUnits="userSpaceOnUse" x="-100" y="-100" width="250" height="220"><rect x="-100" y="-100" width="250" height="220" fill="url(#kh-hg)"/></mask></defs>
+        <path class="a-arm" id="kh-arm-p" d=""/>
+        <g id="kh-paw-g">
+          <svg id="kh-r0" style="display:none" preserveAspectRatio="none"><image href="assets/cat/paw-reach.webp" width="506" height="197"/></svg><svg id="kh-r1" style="display:none" preserveAspectRatio="none"><image href="assets/cat/paw-reach.webp" width="506" height="197"/></svg><svg id="kh-r2" style="display:none" preserveAspectRatio="none"><image href="assets/cat/paw-reach.webp" width="506" height="197"/></svg><svg id="kh-s0" style="display:none" preserveAspectRatio="none"><image href="assets/cat/paw-swat.webp" width="489" height="224"/></svg><svg id="kh-s1" style="display:none" preserveAspectRatio="none"><image href="assets/cat/paw-swat.webp" width="489" height="224"/></svg><svg id="kh-s2" style="display:none" preserveAspectRatio="none"><image href="assets/cat/paw-swat.webp" width="489" height="224"/></svg>
+          </g>
+        <image id="kh-img-peek" href="assets/cat/paw-peek.webp" x="-16" y="-56" width="54" height="113" style="display:none"/>
+      </svg>
+      <button class="kh-paw-btn" type="button" id="kh-paw-btn" aria-label="Need a break? Open the break room"></button>
+      <div class="kh-say" id="kh-say" role="group" aria-label="A stray paw has a question" hidden>
+        <p id="kh-say-text">Need a break?</p>
+        <div class="kh-say-actions">
+          <button class="btn solid" type="button" id="kh-yes">Play a game</button>
+          <button class="btn" type="button" id="kh-lz" hidden>Laser</button>
+          <button class="kh-x" type="button" id="kh-no" aria-label="Send the paw away for this visit">Shoo</button>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 
@@ -1267,5 +1575,893 @@ var CONTACT = { email: "kaitrosebd@gmail.com", linkedin: "https://www.linkedin.c
   });
 })();
 
+</script>
+<script>
+(function () {
+  var dlg = document.getElementById('wr-dialog');
+  var tpl = document.getElementById('kh-cat-tpl');
+
+  /* ---------- the mascot: painted sprites cut from the Canva mascot sheet, loaded only when the cat needs them ---------- */
+  var KW = { sit: 60, stretch: 90, arch: 70, curl: 66, groom: 64, butt: 36, swat: 76 };
+  var KNR = { sit: 1, curl: 1, butt: 1, swat: 1 };
+  function kCat() {
+    var o = '<div class="kt r" data-pose="sit" data-pz="sit" aria-hidden="true">';
+    Object.keys(KW).forEach(function (k) {
+      o += '<img class="pz pz-' + k + (KNR[k] ? ' nr' : ' nl') + '" data-src="assets/cat/' + k + '.webp" style="width:' + KW[k] + '%" alt="" decoding="async" draggable="false">';
+    });
+    return o + '</div>';
+  }
+  function loadCat(list) {
+    var imgs = document.querySelectorAll('.kt img[data-src]');
+    for (var i = 0; i < imgs.length; i++) {
+      var im = imgs[i], k = im.className.match(/pz-(\w+)/)[1];
+      if (!list || list.indexOf(k) > -1) { im.src = im.getAttribute('data-src'); im.removeAttribute('data-src'); }
+    }
+  }
+  tpl.innerHTML = kCat();
+  if (!dlg || !tpl || !tpl.content) return;
+  var root = document.getElementById('wr');
+  var board = document.getElementById('wr-board');
+  var stage = board.parentNode;
+  var scoreEl = document.getElementById('wr-score');
+  var timeEl = document.getElementById('wr-time');
+  var bestEl = document.getElementById('wr-best');
+  var msg = document.getElementById('wr-msg');
+  var say = document.getElementById('wr-say');
+  var startBtn = document.getElementById('wr-start');
+  var relax = document.getElementById('wr-relax');
+  var closeBtn = document.getElementById('wr-close');
+  var panelA = document.getElementById('wr-panel-a');
+  var panelB = document.getElementById('est');
+  var tabA = document.getElementById('tab-a');
+  var tabB = document.getElementById('tab-b');
+  var tabC = document.getElementById('tab-c');
+  var panelC = document.getElementById('bingo');
+  var pal = document.getElementById('kh-pal');
+  var palBtn = document.getElementById('kh-cat-btn');
+  var palSay = document.getElementById('kh-say');
+  var palText = document.getElementById('kh-say-text');
+  var yesBtn = document.getElementById('kh-yes');
+  var noBtn = document.getElementById('kh-no');
+  var openLink = document.getElementById('wr-open');
+
+  function makeCat(cls) {
+    var n = tpl.content.firstElementChild.cloneNode(true);
+    n.setAttribute('class', 'kt' + (cls ? ' ' + cls : ''));
+    return n;
+  }
+  var cat = makeCat('wr-cat');
+  cat.classList.remove('r');
+  var host = document.getElementById('wr-host');
+  host.insertBefore(cat, say);
+  var pzHold = '', pzT = 0, sayTimer = 0, lastChat = 0;
+  function catPz() { cat.setAttribute('data-pz', pzHold || (cat.getAttribute('data-mood') === 'oops' ? 'arch' : 'sit')); }
+  catPz();
+  function pose(p, ms) {
+    pzHold = p; catPz(); clearTimeout(pzT);
+    pzT = setTimeout(function () { pzHold = ''; catPz(); }, ms || 3000);
+    if (!reduce) { cat.classList.remove('pop'); void cat.offsetWidth; cat.classList.add('pop'); }
+  }
+  /* the cat is the host of the break room: one voice, a pose to match, used by every game */
+  function chat(text, p, ms) { if (p) pose(p, ms ? ms + 200 : 3200); speak(text, ms); lastChat = Date.now(); }
+
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { root.classList.add('calm'); relax.checked = true; }
+  function getBest(k) { try { return parseInt(localStorage.getItem(k), 10) || 0; } catch (e) { return 0; } }
+  function setBest(k, v) { try { localStorage.setItem(k, String(v)); } catch (e) {} }
+
+  /* shared end-of-game report, styled as a weekly no-surprises note */
+  function report(target, title, sub, rag, rows) {
+    var wrap = document.createElement('div'); wrap.className = 'wr-update';
+    var h = document.createElement('h3'); h.textContent = title;
+    var j = document.createElement('p'); j.className = 'wr-joke'; j.textContent = sub;
+    var dl = document.createElement('dl');
+    var note = document.createElement('p'); note.className = 'wr-note'; note.textContent = 'Weekly no-surprises note';
+    dl.appendChild(note);
+    var dt = document.createElement('dt'); dt.textContent = 'Status';
+    var dd = document.createElement('dd'); var sp = document.createElement('span'); sp.className = 'rag ' + rag[0]; sp.textContent = rag[1]; dd.appendChild(sp);
+    dl.appendChild(dt); dl.appendChild(dd);
+    rows.forEach(function (r) {
+      var a = document.createElement('dt'); a.textContent = r[0];
+      var b = document.createElement('dd'); b.textContent = r[1];
+      dl.appendChild(a); dl.appendChild(b);
+    });
+    wrap.appendChild(h); wrap.appendChild(j); wrap.appendChild(dl);
+    target.textContent = '';
+    target.appendChild(wrap);
+    try { target.scrollIntoView({ block: 'nearest' }); } catch (e) {}
+  }
+  var NEXT = ['More requests, same cat.', 'A quick sync about the quick sync.', 'Add AI. Somewhere.', 'Talk to Kaitlin about it.', 'Hire Kaitlin.', 'Read her case studies. Then argue with this report.', 'Nap.'];
+
+  /* ---------- game one: whack-a-request ---------- */
+  var NOISE = [
+    ['CEO', 'Make the logo bigger'], ['Sales', 'One customer might want this'], ['Marketing', 'Launch Friday? It is Thursday'],
+    ['Eng', 'Quick framework rewrite?'], ['Legal', 'Just one more checkbox'], ['Design', 'Can it be more purple?'],
+    ['Exec', 'Add AI. Anywhere.'], ['Finance', 'Ship it, but spend nothing'], ['Sales', 'A chatbot for the chatbot'],
+    ['Everyone', 'Just one tiny thing'], ['Cousin', 'Why not make an app?'], ['Boss', 'Quick sync. One hour.'],
+    ['Boss', 'Quick question (not quick)'], ['Sales', 'A competitor has a button'], ['Marketing', 'Can it go viral?'],
+    ['Exec', 'What if it were a podcast?'], ['Design', 'Make it pop'], ['Finance', 'Why is this a quarter of work?'],
+    ['Eng', 'It works on my machine'], ['Intern', 'Have we tried blockchain?']
+  ];
+  var REAL = [
+    'I cannot find my payout details', 'Where is my money?', 'Your reset email never came', 'This warning scares me. What did I do?',
+    'Checkout asks my phone number twice', 'My release is stuck. Is anyone there?', 'I just want to change my email', 'Please do not log me out again'
+  ];
+  var PARK = ['Parked in lot B', 'Added to the backlog lake', 'Great idea for Q47', 'Noted with love', 'Let us take it offline', 'Filed under someday', 'Thank you! Next year'];
+  var OOPS = ['Oops, a real person', 'That was a customer', 'Ouch. A human.'];
+  var SAY_PARK = ['Backlog groomed.', 'Another one for the lake.', 'Scope contained, barely.', 'Kaitlin does this for a living.', 'Kaitlin would be great at this game.', 'Hire her. I will wait.'];
+  var SAY_COMBO = ['Roadmap looks healthy. Suspicious.', 'Five in a row. Put it on the resume.'];
+  var SAY_OOPS = ['That one had a heartbeat.', 'Meow. That was a customer.', 'Kaitlin would be disappointed.'];
+  var SAY_SPARED = ['Good. Customers first.', 'Customer heard. Nice.'];
+  var TITLES = [
+    [250, 'Roadmap Guardian', 'Calm, kind and ruthless about scope.'],
+    [160, 'The Oracle in Training', 'You answered what was already in the room.'],
+    [80, 'Backlog Gardener', 'A lot of requests got a lovely spot in the lake.'],
+    [0, 'Meeting Survivor', 'You made it out with your calendar mostly intact.'],
+    [-9999, 'Chaotic Neutral PM', 'You parked a few customers. The cat is disappointed.']
+  ];
+
+  var holes = [];
+  var running = false, timer = null, sayTimer = null;
+  var last = 0, t = 0, dur = 30000, nextSpawn = 0, lastShown = -1;
+  var score = 0, stats = {}, streak = 0;
+  var best = getBest('kh-wr-best');
+  bestEl.textContent = best;
+
+  for (var i = 0; i < 9; i++) {
+    (function (n) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'hole';
+      b.tabIndex = -1;
+      b.setAttribute('aria-label', 'Hole ' + (n + 1) + ', empty');
+      b.addEventListener('click', function () { tap(n); });
+      board.appendChild(b);
+      holes.push({ el: b, card: null });
+    })(i);
+  }
+
+  function mood(m) {
+    cat.setAttribute('data-mood', m); catPz();
+    clearTimeout(mood.t);
+    if (m !== 'idle') mood.t = setTimeout(function () { cat.setAttribute('data-mood', 'idle'); }, 750);
+  }
+  function speak(text, ms) {
+    say.textContent = text;
+    say.classList.add('on');
+    clearTimeout(sayTimer);
+    sayTimer = setTimeout(function () { say.classList.remove('on'); }, ms || (running ? 1700 : 3800));
+  }
+  function setScore() { scoreEl.textContent = score; }
+  function setTime(ms) {
+    var s = Math.max(0, Math.ceil(ms / 1000));
+    if (s !== lastShown) { lastShown = s; timeEl.textContent = s; }
+  }
+
+  function pop(i, text, cls) {
+    var h = holes[i].el;
+    var p = document.createElement('span');
+    p.className = 'wr-pop ' + cls;
+    p.textContent = text;
+    p.setAttribute('aria-hidden', 'true');
+    board.appendChild(p);
+    var left = h.offsetLeft + h.offsetWidth / 2 - p.offsetWidth / 2;
+    var maxLeft = board.clientWidth - p.offsetWidth;
+    p.style.left = Math.max(0, Math.min(maxLeft, left)) + 'px';
+    p.style.top = (h.offsetTop + h.offsetHeight * 0.3) + 'px';
+    setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, 1000);
+  }
+
+  function removeCard(i) {
+    var h = holes[i];
+    if (!h.card) return;
+    var el = h.card.el;
+    el.classList.add('out');
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 240);
+    h.card = null;
+    h.el.setAttribute('aria-label', 'Hole ' + (i + 1) + ', empty');
+  }
+
+  function spawn() {
+    var free = [];
+    for (var i = 0; i < 9; i++) if (!holes[i].card) free.push(i);
+    if (!free.length) return;
+    var i = pick(free);
+    var real = Math.random() < 0.28;
+    var tag, text, p0 = false;
+    if (real) { tag = 'Customer'; text = pick(REAL); }
+    else { var n = pick(NOISE); tag = n[0]; text = n[1]; p0 = Math.random() < 0.3; }
+    var el = document.createElement('div');
+    el.className = 'wr-card ' + (real ? 'real' : 'noise');
+    var head = document.createElement('span'); head.className = 'wr-head';
+    var a = document.createElement('span'); a.className = 'wr-tag'; a.textContent = tag;
+    head.appendChild(a);
+    if (p0) { var z = document.createElement('span'); z.className = 'wr-p0'; z.textContent = 'P0'; head.appendChild(z); }
+    var b = document.createElement('span'); b.className = 'wr-txt'; b.textContent = text;
+    el.appendChild(head); el.appendChild(b);
+    holes[i].el.appendChild(el);
+    var life = relax.checked ? 3600 : Math.max(850, 1700 - t * 0.025);
+    holes[i].card = { el: el, real: real, die: t + life };
+    holes[i].el.setAttribute('aria-label', 'Hole ' + (i + 1) + ', ' + tag + ' says: ' + text + (p0 ? ' (marked P0)' : '') + (real ? '. This is a customer.' : '.'));
+    cat.classList.add('swat'); pzHold = 'swat'; catPz();
+    setTimeout(function () { cat.classList.remove('swat'); pzHold = ''; catPz(); }, 420);
+  }
+
+  function delay() {
+    var d = Math.max(420, 950 - t * 0.02);
+    return relax.checked ? Math.max(900, d * 1.6) : d;
+  }
+
+  function tap(i) {
+    if (!running) return;
+    var h = holes[i];
+    if (!h.card) return;
+    if (h.card.real) {
+      score -= 20; stats.hit++; streak = 0;
+      pop(i, pick(OOPS), 'bad');
+      mood('oops');
+      speak(pick(SAY_OOPS));
+    } else {
+      score += 10; stats.parked++; streak++;
+      pop(i, pick(PARK), 'good');
+      mood('happy');
+      if (streak % 5 === 0) { speak(pick(SAY_COMBO)); pose('stretch', 1400); }
+      else if (Math.random() < 0.25) speak(pick(SAY_PARK));
+    }
+    removeCard(i);
+    setScore();
+  }
+
+  function tick() {
+    var now = performance.now();
+    var dt = Math.min(now - last, 100);
+    last = now;
+    t += dt;
+    var left = dur - t;
+    if (left <= 0) { end(); return; }
+    setTime(left);
+    for (var i = 0; i < 9; i++) {
+      var c = holes[i].card;
+      if (c && t >= c.die) {
+        if (c.real) { stats.spared++; if (Math.random() < 0.4) speak(pick(SAY_SPARED)); }
+        else stats.slipped++;
+        removeCard(i);
+      }
+    }
+    if (t >= nextSpawn) { spawn(); nextSpawn = t + delay(); }
+  }
+
+  function clearBoard() { for (var i = 0; i < 9; i++) removeCard(i); }
+
+  function start() {
+    clearInterval(timer);
+    clearBoard();
+    dur = relax.checked ? 45000 : 30000;
+    score = 0; t = 0; nextSpawn = 400; lastShown = -1; streak = 0;
+    stats = { parked: 0, hit: 0, spared: 0, slipped: 0 };
+    setScore(); setTime(dur);
+    running = true;
+    startBtn.textContent = 'Restart sprint';
+    msg.textContent = 'Sprint started. Park the noise and leave the customers alone.';
+    speak('Sprint planning is cancelled. Go.');
+    mood('idle');
+    last = performance.now();
+    timer = setInterval(tick, 50);
+  }
+
+  function end() {
+    running = false;
+    clearInterval(timer);
+    clearBoard();
+    setTime(0);
+    var ti = TITLES[TITLES.length - 1];
+    for (var k = 0; k < TITLES.length; k++) { if (score >= TITLES[k][0]) { ti = TITLES[k]; break; } }
+    var newBest = score > best && score > 0;
+    if (newBest) { best = score; bestEl.textContent = best; setBest('kh-wr-best', best); }
+    startBtn.textContent = 'Another sprint';
+    mood(score >= 50 ? 'happy' : 'oops');
+    chat(score >= 50 ? 'Retro time. Not bad at all.' : 'Retro time. We will call it a learning.', score >= 50 ? 'stretch' : 'groom', 3600);
+    plug();
+    var rag = score >= 160 ? ['g', 'Green'] : score >= 50 ? ['a', 'Amber'] : ['r', 'Red'];
+    report(msg, ti[1] + ', ' + score + ' story points' + (newBest ? ' (a new best)' : ''), ti[2], rag, [
+      ['Shipped', plural(stats.parked, 'request') + ' parked'],
+      ['Customers heard', plural(stats.spared, 'customer') + ' left in peace'],
+      ['Risks', (stats.hit ? plural(stats.hit, 'customer') + ' got whacked. ' : '') + (stats.slipped ? plural(stats.slipped, 'request') + ' slipped through. ' : '') + 'The cat.'],
+      ['Next week', pick(NEXT)]
+    ]);
+  }
+
+  function stopGame() {
+    running = false;
+    clearInterval(timer);
+    clearBoard();
+    startBtn.textContent = 'Start sprint';
+    msg.textContent = 'Ready when you are.';
+    setScore(); timeEl.textContent = relax.checked ? 45 : 30; lastShown = -1;
+    say.classList.remove('on');
+  }
+  startBtn.addEventListener('click', start);
+  timeEl.textContent = relax.checked ? 45 : 30;
+
+  /* ---------- game two: estimate it ---------- */
+  var VALS = ['1', '2', '3', '5', '8', '13', '21', '?'];
+  var TICKETS = [
+    ['Design', 'Change the button color', 0, 'Twenty minutes of work and three rounds of feedback.'],
+    ['Support', 'Fix the typo on the pricing page', 0, 'Done before the meeting about it ended.'],
+    ['Sales', 'Add a field to the signup form', 2, 'Then "one more field" showed up. It always does.'],
+    ['Marketing', 'Send a reminder email', 1, 'Two points for the email. The copy review is separate.'],
+    ['Exec', 'Add AI. Anywhere.', 7, 'Correct. When the ticket says anywhere, the estimate is a question.'],
+    ['Boss', 'Make it faster', 7, 'Faster than what? Ask first, estimate second.'],
+    ['Finance', 'New payout option', 5, 'Finance, legal, support and a surprise holiday.'],
+    ['Design', 'Add dark mode', 4, 'Every screenshot needs a redo. Ask me how I know.'],
+    ['Eng', 'Retire the old checkout', 4, 'Customer messaging counts as work too.'],
+    ['Exec', 'Rebuild login with SSO and legacy users', 5, 'Legacy users are never just users.'],
+    ['Eng', 'Move data off the 2012 database', 6, 'Nobody knows what is in there. Bring snacks.'],
+    ['Everyone', 'A quick fix for the quick fix', 2, 'It is always a 3. Nobody knows why.'],
+    ['Sales', 'Can we match the competitor button?', 7, 'Which button? What does it do? Ask first.'],
+    ['Legal', 'One more consent checkbox', 2, 'Small to build and surprisingly large to word.']
+  ];
+  var est = {
+    on: false, active: false, order: [], n: 0, score: 0, exact: 0, close: 0, miss: 0, askedRight: 0,
+    deadline: 0, life: 6000, raf: 0, nextT: 0
+  };
+  var estScoreEl = document.getElementById('est-score'), estN = document.getElementById('est-n'), estBestEl = document.getElementById('est-best');
+  var estWho = document.getElementById('est-who'), estTitle = document.getElementById('est-title'), estBar = document.getElementById('est-bar');
+  var estCards = document.getElementById('est-cards'), estMsg = document.getElementById('est-msg');
+  var estStart = document.getElementById('est-start'), estNextBtn = document.getElementById('est-next');
+  var estBest = getBest('kh-est-best');
+  estBestEl.textContent = estBest;
+  var cardEls = [];
+  VALS.forEach(function (v, idx) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'est-card'; b.textContent = v; b.disabled = true; b.tabIndex = -1;
+    b.setAttribute('aria-label', v === '?' ? 'Question mark. Ask first.' : v + ' points');
+    b.addEventListener('click', function () { estPick(idx); });
+    estCards.appendChild(b); cardEls.push(b);
+  });
+
+  function estClearMarks() { cardEls.forEach(function (c) { c.classList.remove('right', 'picked', 'dim'); }); }
+  function estDeal() {
+    if (est.active) return;
+    clearTimeout(est.nextT);
+    estNextBtn.hidden = true;
+    estClearMarks();
+    if (est.n >= 8) { estEnd(); return; }
+    var tk = est.order[est.n];
+    est.n++;
+    est.cur = tk;
+    estN.textContent = est.n + ' / 8';
+    estWho.textContent = tk[0];
+    estTitle.textContent = tk[1];
+    estMsg.textContent = 'Pick an estimate.';
+    cardEls.forEach(function (c) { c.disabled = false; });
+    est.life = relax.checked ? 12000 : 6000;
+    est.deadline = performance.now() + est.life;
+    est.active = true;
+    cancelAnimationFrame(est.raf);
+    var loop = function () {
+      if (!est.active) return;
+      var left = est.deadline - performance.now();
+      estBar.style.transform = 'scaleX(' + Math.max(0, left / est.life) + ')';
+      if (left <= 0) { estResolve(-1); return; }
+      est.raf = requestAnimationFrame(loop);
+    };
+    est.raf = requestAnimationFrame(loop);
+  }
+  function estPick(idx) { if (est.on && est.active) estResolve(idx); }
+  function estResolve(idx) {
+    est.active = false;
+    cancelAnimationFrame(est.raf);
+    cardEls.forEach(function (c) { c.disabled = true; });
+    var right = est.cur[2], pts = 0, line;
+    var d = idx < 0 ? 99 : (right === 7 || idx === 7) ? (idx === right ? 0 : 99) : Math.abs(idx - right);
+    if (d === 0) { pts = 20; est.exact++; if (right === 7) est.askedRight++; }
+    else if (d === 1) { pts = 10; est.close++; }
+    else est.miss++;
+    est.score += pts;
+    estScoreEl.textContent = est.score;
+    cardEls[right].classList.add('right');
+    if (idx >= 0) cardEls[idx].classList.add('picked');
+    cardEls.forEach(function (c, k) { if (k !== right && k !== idx) c.classList.add('dim'); });
+    var said = idx < 0 ? 'Nobody picked. The sprint started anyway.' : 'You said ' + VALS[idx] + '.';
+    estMsg.textContent = 'The team says ' + VALS[right] + '. ' + said + ' ' + (pts ? '+' + pts + '. ' : 'No points. ') + est.cur[3];
+    estNextBtn.hidden = false;
+    estNextBtn.textContent = est.n >= 8 ? 'See the report' : 'Next ticket';
+    if (d === 0) chat(pick(['Dead on. Suspiciously good.', 'Exact. Please never tell engineering.', 'Nailed it. Put it on the resume.']), 'stretch', 2600);
+    else if (d === 1) chat(pick(['Off by one. A normal Tuesday.', 'Close enough for a sprint.']), 'sit', 2400);
+    else chat(pick(['Bold estimate. Wrong, but bold.', 'That ticket was not a 1. They never are.', 'The cat has questions about that number.']), 'arch', 2600);
+    est.nextT = setTimeout(estDeal, relax.checked ? 6500 : 3200);
+  }
+  function estEnd() {
+    est.on = false;
+    var sc = est.score;
+    var ti = sc >= 140 ? ['Eerily Accurate', 'Engineering wants your number.'] : sc >= 100 ? ['Seasoned Estimator', 'You have been burned before and it shows.'] : sc >= 60 ? ['Cheerful Optimist', 'It was a 3. It is always a 3.'] : ['Everything Is Fine', 'Famous last words.'];
+    var rag = sc >= 120 ? ['g', 'Green'] : sc >= 70 ? ['a', 'Amber'] : ['r', 'Red'];
+    var newBest = sc > estBest && sc > 0;
+    if (newBest) { estBest = sc; estBestEl.textContent = sc; setBest('kh-est-best', sc); }
+    estStart.textContent = 'Deal another round';
+    plug();
+    estNextBtn.hidden = true;
+    estTitle.textContent = 'Round over. Retro time.';
+    chat(sc >= 100 ? 'Eerie. Do you have a crystal ball or a spreadsheet?' : sc >= 60 ? 'Respectable. The roadmap survives.' : 'It was a 3. It is always a 3.', sc >= 100 ? 'stretch' : 'groom', 4200);
+    estWho.textContent = 'Backlog';
+    report(estMsg, ti[0] + ', ' + sc + ' story points' + (newBest ? ' (a new best)' : ''), ti[1], rag, [
+      ['Dead on', plural(est.exact, 'ticket')],
+      ['One card off', plural(est.close, 'ticket')],
+      ['Missed', plural(est.miss, 'ticket')],
+      ['Asked first', est.askedRight ? plural(est.askedRight, 'time') + ' (the best answer)' : 'Never. Ask more questions.'],
+      ['Next week', pick(NEXT)]
+    ]);
+  }
+  function estReset() {
+    est.on = false; est.active = false; clearTimeout(est.nextT); cancelAnimationFrame(est.raf);
+    cardEls.forEach(function (c) { c.disabled = true; });
+    estClearMarks();
+    estNextBtn.hidden = true;
+    estStart.textContent = 'Deal the first ticket';
+    estMsg.textContent = 'Ready when you are.';
+    estTitle.textContent = 'Press deal to get your first ticket.';
+    estWho.textContent = 'Backlog';
+    estN.textContent = '0 / 8'; estScoreEl.textContent = '0';
+    estBar.style.transform = 'scaleX(1)';
+  }
+  function estBegin() {
+    estReset();
+    est.on = true; est.order = shuffle(TICKETS).slice(0, 8); est.n = 0; est.score = 0; est.exact = 0; est.close = 0; est.miss = 0; est.askedRight = 0;
+    estStart.textContent = 'Restart round';
+    estDeal();
+  }
+  estStart.addEventListener('click', estBegin);
+  estNextBtn.addEventListener('click', estDeal);
+
+  /* ---------- game three: standup bingo (live card) ---------- */
+  var BG = [
+    'Quick sync?', 'Circle back', 'Take it offline', 'No bandwidth', 'Low-hanging fruit', 'Move the needle', 'Per my last message',
+    'Let us table that', 'Same as yesterday', 'No blockers', 'Blocked, vaguely', 'Almost done', '99% done', 'Waiting on review',
+    'Waiting on design', 'Waiting on legal', 'Scope creep', 'Out of scope', 'Feature flag', 'Ship it Friday', 'Hotfix',
+    'Works on my machine', 'Tech debt', 'Next sprint', 'On the roadmap?', 'North star', 'MVP', 'We should pivot', 'Add AI',
+    'Needs a deck', 'Who owns this?', 'Loop in legal', 'Update the ticket', 'Rolled over again', 'It was a 3', 'It is a 13',
+    'Hard stop at :30', 'Standup runs long', 'It becomes a meeting', 'You are on mute', 'Camera off', 'Wrong window shared',
+    'Dog barking', 'Kid walks in', 'Cat on screen', 'Echo', 'Frozen face', 'Can you hear me?', 'Late joiner', 'Eating on call',
+    'Awkward silence', 'Talking over each other', 'You go, no you go', 'Total tangent', 'Coffee mentioned', 'Weekend mentioned',
+    'Sorry, I am late', 'Just to be clear', 'As a reminder', 'Quick question', 'Does that make sense?', 'Great question',
+    'Let us park that', 'Looks good to me', 'Taking an action item', 'Thanks all'
+  ];
+  var BG_LINES = (function () {
+    var L = [], r, c;
+    for (r = 0; r < 5; r++) L.push([0, 1, 2, 3, 4].map(function (k) { return r * 5 + k; }));
+    for (c = 0; c < 5; c++) L.push([0, 1, 2, 3, 4].map(function (k) { return k * 5 + c; }));
+    L.push([0, 6, 12, 18, 24]); L.push([4, 8, 12, 16, 20]);
+    return L;
+  })();
+  var MARKED = ['Called it.', 'Noted. Silently judging.', 'Somebody had to say it.', 'Every standup, every time.', 'Marked. Nobody is surprised.'];
+  var bgGrid = document.getElementById('bg-grid'), bgMsg = document.getElementById('bg-msg');
+  var bgCodeEl = document.getElementById('bg-code'), bgFoot = document.getElementById('bg-foot');
+  var bgCountEl = document.getElementById('bg-count'), bgCloseEl = document.getElementById('bg-close'), bgBingosEl = document.getElementById('bg-bingos');
+  var bg = { idx: [], marks: {}, lines: {}, pose: '', cells: [] };
+  for (var bi = 0; bi < 25; bi++) {
+    (function (n) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'bg-cell';
+      b.addEventListener('click', function () { bgToggle(n); });
+      bgGrid.appendChild(b); bg.cells.push(b);
+    })(bi);
+  }
+  function bgLabel(pos) { return pos === 12 ? null : BG[bg.idx[pos < 12 ? pos : pos - 1]]; }
+  function bgCode() {
+    var h = 0; bg.idx.forEach(function (i) { h = (h * 31 + i + 1) >>> 0; });
+    return ('00000' + h.toString(36).toUpperCase()).slice(-5);
+  }
+  function bgSave() { try { sessionStorage.setItem('kh-bg', JSON.stringify({ i: bg.idx, m: Object.keys(bg.marks) })); } catch (e) {} }
+  function bgDone() {
+    var d = {};
+    BG_LINES.forEach(function (ln, k) { if (ln.every(function (x) { return x === 12 || bg.marks[x]; })) d[k] = true; });
+    return d;
+  }
+  function bgDraw() {
+    var done = bgDone(), inLine = {}, count = 1, close = 1;
+    Object.keys(done).forEach(function (k) { BG_LINES[k].forEach(function (x) { inLine[x] = true; }); });
+    BG_LINES.forEach(function (ln) { var n = ln.filter(function (x) { return x === 12 || bg.marks[x]; }).length; if (n > close) close = n; });
+    bg.cells.forEach(function (c, pos) {
+      var lab = bgLabel(pos), on = pos === 12 || !!bg.marks[pos];
+      c.textContent = lab === null ? 'Standup starts late' : lab;
+      c.className = 'bg-cell' + (pos === 12 ? ' free' : '') + (on ? ' on' : '') + (inLine[pos] ? ' line' : '');
+      c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on && pos !== 12) count++;
+    });
+    var nb = Object.keys(done).length;
+    bgCountEl.textContent = count + ' / 25'; bgCloseEl.textContent = close + ' / 5'; bgBingosEl.textContent = nb;
+    bgCodeEl.textContent = 'Card #' + bgCode();
+    bgFoot.textContent = count + ' marked, ' + nb + (nb === 1 ? ' bingo' : ' bingos');
+    return done;
+  }
+  function bgToggle(pos) {
+    if (pos === 12) return;
+    var before = bgDone();
+    if (bg.marks[pos]) delete bg.marks[pos]; else bg.marks[pos] = true;
+    var after = bgDraw(), fresh = Object.keys(after).filter(function (k) { return !before[k]; }).length;
+    bgSave();
+    var nb = Object.keys(after).length;
+    if (fresh) {
+      chat(pick(['BINGO. I will be in the corner, vibrating.', 'Five in a row. The cat is shocked.']), 'butt', 3200);
+      plug();
+      var all = Object.keys(bg.marks).length === 24;
+      bgShowAlert(all ? 'all' : nb === 1 ? 'one' : 'two');
+      bgMsg.textContent = all ? 'Blackout. Everyone said everything. Go home.' : nb === 1 ? 'BINGO! Screenshot your card and send it to the team chat. Quietly.' : nb === 2 ? 'Two bingos. This is not a standup anymore, it is a podcast.' : 'Another bingo. Please let your team speak.';
+    } else if (bg.marks[pos]) {
+      bgMsg.textContent = pick(MARKED);
+      if (Math.random() < 0.3) chat(pick(['Noted. Somebody said synergy.', 'I heard that too. Painful.', 'Another one. The meeting continues.', 'Mark it. I will wait.']), 'sit', 2200);
+    } else { bgMsg.textContent = 'Square cleared.'; }
+  }
+  function bgDeal() {
+    bg.idx = shuffle(BG.map(function (x, i) { return i; })).slice(0, 24);
+    bg.marks = {};
+    bgDraw(); bgSave();
+    bgMsg.textContent = 'Fresh card dealt. May your standup be predictable.';
+    if (dlgOpen) chat('Fresh card. Fresh disappointment. Good luck.', 'swat', 2400);
+  }
+  var bgAlert = document.getElementById('bg-alert'), bgAlertCat = document.getElementById('bg-alert-cat'), bgAlertOk = document.getElementById('bg-al-ok');
+  var bgCatEl = makeCat('');
+  bgCatEl.setAttribute('data-pose', 'butt'); bgCatEl.setAttribute('data-pz', 'butt'); bgCatEl.classList.add('r');
+  bgAlertCat.appendChild(bgCatEl);
+  var BG_ALERT = {
+    one: ['BINGO!', ['Screenshot your card and send it to the team chat. Quietly.', 'Your standup just ran on rails. The cat approves.', 'Five in a row. Please do not say it out loud.']],
+    two: ['DOUBLE BINGO!', ['This is not a standup anymore, it is a podcast.', 'Two bingos. Your team is very consistent.']],
+    all: ['BLACKOUT!', ['Every square. Nobody said anything new. Go home.', 'Full card. Please schedule a retro about the standup.']]
+  };
+  function bgShowAlert(kind) {
+    var a = BG_ALERT[kind];
+    document.getElementById('bg-al-t').textContent = a[0];
+    document.getElementById('bg-al-p').textContent = pick(a[1]);
+    bgAlert.hidden = false; loadCat(['butt']);
+    try { bgAlertOk.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function bgHideAlert() { bgAlert.hidden = true; }
+  document.getElementById('wr-dialog').addEventListener('close', bgHideAlert);
+  bgAlertOk.addEventListener('click', bgHideAlert);
+  bgAlert.addEventListener('click', function (e) { if (e.target === bgAlert) bgHideAlert(); });
+  bgAlert.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); e.preventDefault(); bgHideAlert(); } });
+  document.getElementById('bg-new').addEventListener('click', function () { bgHideAlert(); bgDeal(); });
+  document.getElementById('bg-clear').addEventListener('click', function () { bg.marks = {}; bgDraw(); bgSave(); bgMsg.textContent = 'Marks cleared. Same card.'; });
+  (function () {
+    var ok = false;
+    try {
+      var sv = JSON.parse(sessionStorage.getItem('kh-bg') || 'null');
+      if (sv && sv.i && sv.i.length === 24 && sv.i.every(function (n) { return n >= 0 && n < BG.length; })) {
+        bg.idx = sv.i; bg.marks = {}; (sv.m || []).forEach(function (k) { bg.marks[k] = true; }); ok = true;
+      }
+    } catch (e) {}
+    if (!ok) { bg.idx = shuffle(BG.map(function (x, i) { return i; })).slice(0, 24); bgSave(); }
+    bgDraw();
+  })();
+
+  /* ---------- tabs ---------- */
+  var INTRO = {
+    a: ['Whack-a-Request. Park the noise. Do not park the customers.', 'Backlog is on fire. Tap the noise, spare the humans.'],
+    b: ['Planning poker. I vote question mark.', 'Estimate it. Engineering will disagree anyway.'],
+    c: ['Standup Bingo. Mark them as you hear them. I will judge silently.', 'Bring this to your real standup. I will not be there. I will know.']
+  };
+  var TABS = [['a', tabA, panelA], ['b', tabB, panelB], ['c', tabC, panelC]];
+  function showTab(which) {
+    stopGame(); estReset(); plug();
+    relax.parentNode.hidden = which === 'c';
+    if (dlgOpen) chat(INTRO[which][Math.floor(Math.random() * INTRO[which].length)], which === 'b' ? 'sit' : which === 'c' ? 'butt' : 'swat', 3600);
+    TABS.forEach(function (t) {
+      var on = t[0] === which;
+      t[2].hidden = !on;
+      t[1].setAttribute('aria-selected', on ? 'true' : 'false'); t[1].tabIndex = on ? 0 : -1;
+    });
+  }
+  TABS.forEach(function (t, i) {
+    t[1].addEventListener('click', function () { showTab(t[0]); });
+    t[1].addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      var nx = TABS[(i + d + TABS.length) % TABS.length];
+      showTab(nx[0]); nx[1].focus(); e.preventDefault();
+    });
+  });
+  relax.addEventListener('change', function () { if (!running) timeEl.textContent = relax.checked ? 45 : 30; });
+
+  document.addEventListener('keydown', function (e) {
+    if (!dlgOpen || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (running && /^[1-9]$/.test(e.key)) { e.preventDefault(); tap(parseInt(e.key, 10) - 1); }
+    else if (est.on && est.active && /^[1-8]$/.test(e.key)) { e.preventDefault(); estPick(parseInt(e.key, 10) - 1); }
+  });
+
+  /* ---------- dialog, resume plugs and the scroll-following cat ---------- */
+  var dlgOpen = false, contactVisible = false, off = false;
+  try { off = sessionStorage.getItem('kh-pal-off') === '1'; } catch (e) {}
+  if (openLink) openLink.hidden = false;
+
+  var PLUGS = [
+    'Kaitlin would be great at this game. Her case studies prove it.',
+    'She built three games to get hired. This is the plan. It is working.',
+    'Fun fact: Kaitlin estimates better than this cat. The bar is on the floor.',
+    'Break over? Her work is waiting. So is Kaitlin.',
+    'Scoring this well is why she should run your roadmap.',
+    'Plot twist: this whole site is a job application.',
+    'Kaitlin shipped this between interviews. Imagine what she does with a team.',
+    'The cat works for treats. Kaitlin has more reasonable terms.',
+    'You just played a portfolio piece. Kaitlin is not subtle.'
+  ];
+  var plugText = document.getElementById('wr-plug-text');
+  function plug() { plugText.textContent = pick(PLUGS); }
+  function openDialog() {
+    hideSay(); plug(); loadCat();
+    dlgOpen = true; paw.away(true);
+    if (typeof dlg.showModal === 'function') { if (!dlg.open) dlg.showModal(); }
+    else dlg.setAttribute('open', '');
+    clearTimeout(greetT); greetT = setTimeout(function () { chat(pick(GREET), 'sit', 4200); armIdleChat(); }, 650);
+  }
+  function closeDialog() {
+    if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open');
+    onClosed();
+  }
+  function onClosed() {
+    clearTimeout(greetT); clearTimeout(idleChatT); stopGame(); estReset(); dlgOpen = false; showTab('a');
+    say.classList.remove('on'); pzHold = ''; catPz(); paw.away(false); armInvite(40000);
+  }
+  dlg.addEventListener('close', onClosed);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDialog(); });
+  closeBtn.addEventListener('click', closeDialog);
+
+  /* the host cat idles in the break room: a stretch, a groom, a nap, always with a line */
+  var greetT = 0, idleChatT = 0;
+  var GREET = ['You found the break room. Nobody told your manager.', 'Welcome. The meeting that could have been an email can wait.', 'Pick a game. I will supervise, which means I will nap.', 'Three games, zero meetings. I charge in treats.'];
+  var IDLE_CHAT = [
+    ['Do not mind me. I am blocked on bathing.', 'groom'], ['Stretching is on the roadmap. So is a game.', 'stretch'], ['Shh. Nap time. You could use one too.', 'curl'],
+    ['Customer support is closed. Please enjoy this view.', 'butt'], ['Pushing things off the roadmap since 2019.', 'swat'], ['Blink twice if you need a snack.', 'sit'], ['I will be back. Possibly with a game.', 'sit']
+  ];
+  function armIdleChat() {
+    clearTimeout(idleChatT);
+    if (!dlgOpen) return;
+    idleChatT = setTimeout(function () {
+      if (dlgOpen && !running && !(est.on && est.active) && Date.now() - lastChat > 9000) { var c = pick(IDLE_CHAT); chat(c[0], c[1], 3800); }
+      armIdleChat();
+    }, 15000 + Math.random() * 9000);
+  }
+  dlg.addEventListener('pointerdown', function () { lastChat = Date.now(); }, true);
+
+  /* ---------- the stray paw and the laser pointer on the page ---------- */
+  var LINES = {
+    invite: ['Need a break? I have games.', 'Do you want to play a game? Low stakes. Nobody loses a limb.', 'Three games, zero meetings. You are welcome.', 'Kaitlin built games instead of sleeping. Try one?', 'In space, no one can hear you scroll. Break?', 'The call is coming from inside the browser. It is a game invite.', 'Blink twice if you need a snack.', 'I will be back. Possibly with a game.', 'This paw has no calendar access but it has opinions about your break.', 'Psst. Break time? I brought games.', 'Winter is coming. Take a break first.', 'You miss 100% of the breaks you do not take. Wayne Gretzky, probably.'],
+    menu: ['Need a break?', 'Psst. Over here.'],
+    laser: ['Laser acquired. This is now my whole job.', 'Oh no. A red dot. I am powerless.', 'Move the dot. I will pretend I am not interested.'],
+    caught: ['Got it. It was a roadmap item.', 'The dot has been escalated.', 'Caught it. Do not tell the dot.', 'I live for this. Please hire Kaitlin.', 'Dot neutralized. Standup is safe.'],
+    back: ['Back already? I kept the paw warm.', 'You rang. The break room is open.'],
+    laserOff: ['Dot retired. It had a good run.', 'Laser off. I will be in my feelings.']
+  };
+  var pal = document.getElementById('kh-pal'), palSay = document.getElementById('kh-say'), palText = document.getElementById('kh-say-text');
+  var pawBtn = document.getElementById('kh-paw-btn'), armP = document.getElementById('kh-arm-p'), pawG = document.getElementById('kh-paw-g');
+  var yesBtn = document.getElementById('kh-yes'), lzBtn = document.getElementById('kh-lz'), noBtn = document.getElementById('kh-no');
+  var ldot = document.getElementById('kh-laser'), lbtn = document.getElementById('kh-laser-btn'), lnav = document.getElementById('kh-laser-nav'), backBtn = document.getElementById('kh-back');
+  var finePtr = !reduce && !!(window.matchMedia && window.matchMedia('(pointer: fine)').matches);
+  var EXT = { stub: -14, peek: -14, hover: 26, invite: 64 };
+  var SP = {
+    r: { u: 0.5, px: 506, pxh: 197, cuts: [100, 290], palm: [386, 79], el: [0, 1, 2].map(function (i) { return document.getElementById('kh-r' + i); }) },
+    s: { u: 0.36, px: 489, pxh: 224, cuts: [70, 280], palm: [369, 103], el: [0, 1, 2].map(function (i) { return document.getElementById('kh-s' + i); }) }
+  };
+  /* one painted piece, sliced in three: only the plain forearm slice in the middle ever stretches, the paw and the shoulder end never do, so there is no seam */
+  function layoutSprite(sp, ext, on) {
+    var u = sp.u, c = sp.cuts, W = sp.px, H = sp.pxh, X0 = -sp.palm[0] * u, Y = -sp.palm[1] * u, seg = [[0, c[0], -ext, 0], [c[0], c[1], -ext, ext], [c[1], W, 0, 0]];
+    for (var i = 0; i < 3; i++) {
+      var el = sp.el[i]; if (!on) { el.style.display = 'none'; continue; }
+      var a = seg[i][0], b = seg[i][1], ox = seg[i][2], gw = seg[i][3], ov = i < 2 ? 1.6 : 0;
+      el.style.display = '';
+      el.setAttribute('x', (X0 + a * u + ox).toFixed(2)); el.setAttribute('y', Y.toFixed(2));
+      el.setAttribute('width', ((b - a + ov) * u + gw).toFixed(2)); el.setAttribute('height', (H * u).toFixed(2));
+      el.setAttribute('viewBox', a + ' 0 ' + (b - a + ov) + ' ' + H);
+    }
+  }
+  var imgPeek = document.getElementById('kh-img-peek');
+  var SX = -46, S1 = { x: EXT.peek, y: 300, vx: 0, vy: 0 }, shY = 300, mode = 'peek', T = 0, lastF = 0, rafId = 0, away = false;
+  var dwell = 0, lpx = 0, lpy = 0, lungeStart = 0, lungeEnd = 0, lungeTX = 0, lungeTY = 0, nextLunge = 0, holdUntil = 0, holdX = 0, holdY = 0, laser = false, lx = -99, ly = -99, lmove = 0, lcatch = 0, swat = 0, sayT = 0, sayCount = 0, lastSay = 0, invT = 0, invCount = 0, hoverT = 0, leaveT = 0;
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function vwid() { return document.documentElement.clientWidth; }
+  function reach() { return clamp(vwid() * 0.24, 150, 420); }
+  function scrollY() {
+    var de = document.documentElement, mx = Math.max(1, de.scrollHeight - window.innerHeight), p = clamp(window.scrollY / mx, 0, 1), vh = window.innerHeight;
+    return clamp(vh * 0.26 + p * vh * 0.5, 130, vh - 170);
+  }
+  function render() {
+    var stub = S1.x < -8 && Date.now() >= holdUntil && ((mode === 'stub' || mode === 'peek') || laser) && !(laser && Date.now() < lungeEnd), tx = S1.x, ty = S1.y;
+    if (stub) {
+      armP.setAttribute('d', ''); layoutSprite(SP.r, 0, false); layoutSprite(SP.s, 0, false); imgPeek.style.display = '';
+      imgPeek.setAttribute('transform', 'translate(' + (mode === 'stub' ? -24 : 2) + ' ' + (ty + Math.sin(T * 1.4) * 2).toFixed(1) + ') rotate(' + (Math.sin(T * 1.1) * 1.5).toFixed(2) + ')');
+      pawG.setAttribute('transform', 'translate(-300 0)');
+      pawBtn.style.transform = 'translate3d(' + (mode === 'stub' ? 2 : 12) + 'px,' + ty.toFixed(1) + 'px,0)';
+      placeSay(); return;
+    }
+    imgPeek.style.display = 'none';
+    var dx = tx - SX, dy = ty - shY, L = Math.hypot(dx, dy) || 1, ang = Math.atan2(dy, dx), age = Date.now() - lcatch, sw = lcatch > 0 && age >= 170 && age < 7000;
+    /* the forearm stretches to the shoulder as one piece of fur, so there is never a seam to see */
+    var kz = clamp((L + 60) / 204, 1, 1.45);
+    var spr = sw ? SP.s : SP.r, need = (L + 60) / kz, ext = clamp(need - spr.palm[0] * spr.u, 0, 300);
+    layoutSprite(SP.r, sw ? 0 : ext, !sw); layoutSprite(SP.s, sw ? ext : 0, sw);
+    armP.setAttribute('d', '');
+    var sc = !sw ? 1 : age < 420 ? 1.2 - (age - 170) / 250 * 0.06 : 1.14 - Math.abs(Math.sin(age / 130)) * 0.07 * (age < 2600 ? 1 : 0.4);
+    pawG.setAttribute('transform', 'translate(' + tx.toFixed(1) + ' ' + ty.toFixed(1) + ') rotate(' + (ang * 57.2958).toFixed(1) + ') scale(' + (sc * kz).toFixed(3) + ')');
+    pawBtn.style.transform = 'translate3d(' + (tx + 26).toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0)';
+    placeSay();
+  }
+  function placeSay() {
+    if (palSay.hidden) return;
+    var vh = window.innerHeight, h = palSay.offsetHeight || 90, narrow = vwid() < 700;
+    if (palSay.getAttribute('data-thought')) {
+      palSay.style.left = Math.round(clamp(Math.max(EXT.peek, S1.x) + 96, 70, vwid() - (palSay.offsetWidth || 240) - 12)) + 'px';
+      palSay.style.top = Math.round(clamp(S1.y - h - 40, 84, vh - h - 30)) + 'px'; return;
+    }
+    if (laser && palSay.getAttribute('data-plain')) { palSay.style.left = '16px'; palSay.style.top = (vh - h - 20) + 'px'; return; }
+    palSay.style.left = Math.round(Math.max(narrow ? 56 : 66, (EXT[mode] != null ? EXT[mode] : EXT.peek) + 90)) + 'px';
+    palSay.style.top = clamp(shY - 18, 84, vh - h - 14).toFixed(0) + 'px';
+  }
+  function targets() {
+    var vh = window.innerHeight, wantSh = scrollY(), tx, ty;
+    var inLaser = laser && lx > -50;
+    if (inLaser) wantSh = clamp(ly, 130, vh - 150);
+    return { sh: wantSh, laser: inLaser };
+  }
+  function frame(t) {
+    var dt = Math.min(0.033, (t - (lastF || t)) / 1000); lastF = t; T += dt;
+    var tg = targets();
+    shY += (tg.sh - shY) * Math.min(1, dt * (tg.laser ? 7 : 2.4));
+    var tx, ty, now = Date.now();
+    if (tg.laser) {
+      var ddx = lx - SX, ddy = ly - shY, dd = Math.hypot(ddx, ddy) || 1, R = reach(), ag = now - lcatch;
+      var restX = EXT.peek + Math.sin(T * 2.2) * 2;
+      if (now < holdUntil) {
+        /* the catch: wind back a hair, lunge, press down and hold */
+        tx = ag < 170 ? holdX - 34 : holdX + (ag < 420 ? 62 : 38); ty = holdY;
+      } else if (now < lungeEnd) {
+        /* a stalking lunge: dart out toward the dot and snap back to the margin */
+        var pp = (now - lungeStart) / 560, f = pp < 0.38 ? 1 - Math.pow(1 - pp / 0.38, 2) : 1 - (pp - 0.38) / 0.62;
+        tx = restX + (lungeTX - restX) * f; ty = shY + (lungeTY - shY) * f;
+      } else {
+        var near = dd <= R * 1.25;
+        /* while the dot moves the paw leans out after it, partway, like a cat tracking a toy */
+        var chaseX = (dd <= R ? lx - 36 : SX + ddx * (R * 0.96 / dd) - 36);
+        tx = restX + (near ? clamp((chaseX - restX) * 0.42, 16, 120) + Math.sin(T * 7) * 3 : (dd <= R * 1.7 ? 8 : 0));
+        ty = shY + Math.sin(T * 2.1) * 5 + clamp((ly - shY) * 0.05, -12, 12);
+        var idleMs = now - lmove, slow = Math.hypot(lx - lpx, ly - lpy) < 2.5; lpx = lx; lpy = ly;
+        if (dd <= R) { dwell += dt; } else { dwell = Math.max(0, dwell - dt * 2); }
+        if (dd <= R && now - lcatch > 2500 && swat <= 0 && (idleMs > 420 || dwell > 1.4 || (slow && idleMs > 250))) { dwell = 0; doSwat(); }
+        else if (near && dd > 60 && now > nextLunge && now - lcatch > 3500) {
+          lungeStart = now; lungeEnd = now + 560; nextLunge = now + 2400 + Math.random() * 3200;
+          var kk = dd <= R ? 1 : (R * 0.96) / dd;
+          lungeTX = SX + ddx * kk - 36; lungeTY = shY + ddy * kk;
+        }
+      }
+    } else {
+      var base = EXT[mode] != null ? EXT[mode] : EXT.peek;
+      tx = base + (mode === 'stub' ? 0 : Math.sin(T * 1.6) * 2.5);
+      ty = shY + (mode === 'stub' ? 0 : Math.sin(T * 1.1) * 6);
+      if (mode === 'invite') ty += Math.sin(T * 5) * 4;
+    }
+    if (swat > 0) { swat -= dt * 1.5; }
+    var w = tg.laser ? ((now - lcatch) > 170 && (now - lcatch) < 420 ? 20 : (now < lungeEnd ? 18 : 10)) : ((now - lcatch) < 7000 && S1.x > -8 ? 11 : 6.5);
+    S1.vx += (w * w * (tx - S1.x) - 2 * w * S1.vx) * dt; S1.vy += (w * w * (ty - S1.y) - 2 * w * S1.vy) * dt;
+    S1.x += S1.vx * dt; S1.y += S1.vy * dt;
+    render();
+    rafId = (away || document.hidden) ? 0 : requestAnimationFrame(frame);
+  }
+  function loop() { if (!rafId && !reduce && !away && !document.hidden) { lastF = 0; rafId = requestAnimationFrame(frame); } }
+  function snap() {
+    shY = scrollY(); var base = EXT[mode] != null ? EXT[mode] : EXT.peek; S1.x = base; S1.y = shY; S1.vx = S1.vy = 0; render();
+  }
+  function doSwat() {
+    lcatch = Date.now(); swat = 1; holdUntil = Date.now() + 2500; holdX = lx - 40; holdY = ly;
+    setTimeout(function () {
+      if (!laser) return;
+      ldot.classList.remove('caught'); void ldot.offsetWidth; ldot.classList.add('caught');
+      showSay(pick(LINES.caught), { ms: 6200, plain: true, thought: true });
+      setTimeout(function () { if (laser) laserOff(true); }, 2600);
+    }, 220);
+  }
+  function showSay(text, o) {
+    o = o || {}; palText.textContent = text;
+    yesBtn.hidden = false; lzBtn.hidden = !finePtr; noBtn.hidden = false;
+    palSay.querySelector('.kh-say-actions').hidden = !!o.plain; palSay.setAttribute('data-plain', o.plain ? '1' : ''); palSay.setAttribute('data-thought', o.thought ? '1' : ''); palSay.classList.toggle('thought', !!o.thought);
+    lzBtn.textContent = laser ? 'Laser off' : 'Laser';
+    palSay.hidden = false; placeSay(); clearTimeout(sayT); sayT = setTimeout(hideSay, o.ms || 9000); lastSay = Date.now();
+    if (!reduce) { palSay.style.animation = 'none'; void palSay.offsetWidth; palSay.style.animation = ''; }
+  }
+  function hideSay() { clearTimeout(sayT); palSay.hidden = true; if (mode === 'invite' || mode === 'hover') mode = off ? 'stub' : 'peek'; if (reduce) snap(); }
+  function setMode(m) { mode = m; if (reduce) snap(); else loop(); }
+  function typing() { var a = document.activeElement; return !!a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && !dlg.contains(a); }
+  /* the invitation: every so often the paw slides out and asks, then withdraws */
+  function armInvite(ms) { clearTimeout(invT); if (off) return; invT = setTimeout(invite, ms); }
+  function invite() {
+    if (off) return;
+    /* guard rail: never while she is reading. The paw only offers a game once the reader has reached the bottom of the page */
+    if (!contactVisible || dlgOpen || typing() || document.hidden || laser || !palSay.hidden || invCount >= 2) return;
+    invCount++; setMode('invite'); showSay(pick(LINES.invite), { ms: 9500 });
+  }
+  var off = false;
+  try { off = sessionStorage.getItem('kh-pal-off') === '1'; } catch (e) {}
+  if (openLink) openLink.hidden = false;
+  /* laser: the red dot follows the pointer, the paw reaches for it, and a still dot gets swatted */
+  function laserOn() {
+    if (!finePtr || off) return; laser = true; lmove = Date.now(); holdUntil = 0; swat = 0;
+    ldot.classList.remove('caught'); lx = ptrX > 0 ? ptrX : window.innerWidth / 2; ly = ptrY > 0 ? ptrY : window.innerHeight / 2;
+    ldot.style.transform = 'translate3d(' + lx + 'px,' + ly + 'px,0)'; lbtn.setAttribute('aria-pressed', 'true'); lbtn.textContent = 'Laser off'; lnav.setAttribute('aria-pressed', 'true');
+    ldot.hidden = false; loop(); showSay(pick(LINES.laser), { ms: 4500, plain: true });
+  }
+  function laserOff(quietly) {
+    laser = false; lbtn.setAttribute('aria-pressed', 'false'); lbtn.textContent = 'Laser pointer'; lnav.setAttribute('aria-pressed', 'false'); ldot.hidden = true; setMode(off ? 'stub' : 'peek');
+    if (!quietly) showSay(pick(LINES.laserOff), { ms: 3200, plain: true });
+  }
+  var ptrX = -1, ptrY = -1;
+  if (finePtr) {
+    document.addEventListener('pointermove', function (e) { ptrX = e.clientX; ptrY = e.clientY; }, { passive: true });
+    lbtn.hidden = false; lnav.hidden = false;
+    lbtn.addEventListener('click', function () { if (laser) laserOff(); else { if (off) quiet(false, true); laserOn(); } });
+    lnav.addEventListener('click', function () { if (laser) laserOff(); else { if (off) quiet(false, true); laserOn(); } });
+    lzBtn.addEventListener('click', function () { hideSay(); if (laser) laserOff(true); else laserOn(); });
+    document.addEventListener('pointermove', function (e) {
+      if (!laser || Date.now() < holdUntil) return;
+      lx = e.clientX; ly = e.clientY; lmove = Date.now();
+      ldot.style.transform = 'translate3d(' + lx + 'px,' + ly + 'px,0)';
+    }, { passive: true });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dlgOpen) { if (laser) laserOff(true); else if (!palSay.hidden) hideSay(); } });
+  }
+  /* quiet mode: the paw shrinks to a fingertip at the edge, the invitations stop, "Take a break" at the end of the page brings it back */
+  function quiet(on, silent) {
+    if (on) {
+      off = true; clearTimeout(invT); hideSay(); if (laser) laserOff(true);
+      setMode('stub'); pawBtn.setAttribute('aria-label', 'A stray paw. Bring the break room back');
+      openLink.hidden = true; lbtn.hidden = !finePtr; lnav.hidden = !finePtr; backBtn.hidden = false;
+      try { sessionStorage.setItem('kh-pal-off', '1'); } catch (e) {}
+    } else {
+      off = false; sayCount = 0; invCount = 0; lastSay = 0;
+      try { sessionStorage.removeItem('kh-pal-off'); } catch (e) {}
+      backBtn.hidden = true; openLink.hidden = false; lbtn.hidden = !finePtr; lnav.hidden = !finePtr;
+      pawBtn.setAttribute('aria-label', 'Need a break? Open the break room');
+      setMode('invite'); showSay(pick(LINES.back), { ms: 6000 });
+      armInvite(60000);
+      if (!silent) pawBtn.focus({ preventScroll: true });
+    }
+  }
+  noBtn.addEventListener('click', function () { quiet(true); });
+  backBtn.addEventListener('click', function () { quiet(false); });
+  yesBtn.addEventListener('click', function () { hideSay(); openDialog(); });
+  pawBtn.addEventListener('click', function () { if (off) quiet(false); else { hideSay(); openDialog(); } });
+  /* hovering or focusing the paw opens the little menu (play, laser, shoo) */
+  function menuOpen() { if (off || dlgOpen || laser) return; clearTimeout(leaveT); if (!palSay.hidden) return; setMode('hover'); showSay(pick(LINES.menu), { ms: 7000 }); }
+  function menuLater() { clearTimeout(hoverT); hoverT = setTimeout(menuOpen, 280); }
+  function menuLeave() { clearTimeout(hoverT); clearTimeout(leaveT); leaveT = setTimeout(function () { if (!palSay.matches(':hover') && !pal.contains(document.activeElement)) hideSay(); }, 1400); }
+  pawBtn.addEventListener('mouseenter', menuLater); pawBtn.addEventListener('mouseleave', menuLeave); pawBtn.addEventListener('focus', function () { if (!off) menuOpen(); });
+  palSay.addEventListener('mouseenter', function () { clearTimeout(sayT); clearTimeout(leaveT); });
+  palSay.addEventListener('mouseleave', function () { sayT = setTimeout(hideSay, 3000); });
+  palSay.addEventListener('focusin', function () { clearTimeout(sayT); });
+  palSay.addEventListener('keydown', function (e) { if (e.key === 'Escape') { hideSay(); pawBtn.focus(); } });
+  var scrollT = 0;
+  window.addEventListener('scroll', function () { if (reduce) { clearTimeout(scrollT); scrollT = setTimeout(snap, 120); } else loop(); }, { passive: true });
+  window.addEventListener('resize', function () { snap(); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) loop(); });
+  var paw = { away: function (on) {
+    away = on; pal.classList.toggle('away', on); if (on) { ldot.hidden = true; } else if (laser) ldot.hidden = false;
+    if (!on) loop();
+  } };
+  document.getElementById('wr-plug-go').addEventListener('click', function () {
+    closeDialog();
+    var w = document.getElementById('work');
+    if (w) w.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    setTimeout(function () { if (!dlgOpen && !off) { setMode('invite'); showSay(pick(['Told you she is good. Keep scrolling.', 'Welcome back. This is where Kaitlin shines.', 'Back to the good stuff. I will nap.']), { ms: 6000, plain: true }); } }, 1400);
+  });
+  pal.hidden = false; snap();
+  if (off) quiet(true, true); else { setMode('peek'); armInvite(9000); }
+  loop();
+  if (!off) setTimeout(function () { loadCat(); }, 5000);
+
+  var contact = document.getElementById('contact');
+  if (contact && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { contactVisible = en[0].isIntersecting; if (contactVisible) armInvite(1800); }, { threshold: 0.12 }).observe(contact);
+  }
+  if (openLink) openLink.addEventListener('click', openDialog);
+})();
 </script>
 </html>
