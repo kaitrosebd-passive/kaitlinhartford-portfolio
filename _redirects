@@ -1,0 +1,2 @@
+# Send the old Netlify address to the real domain, keeping the path (and #section links)
+https://kaitlinhartford.netlify.app/*  https://kaitlinhartford.com/:splat  301!
