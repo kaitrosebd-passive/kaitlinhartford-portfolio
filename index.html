@@ -114,8 +114,10 @@ p{margin:0 0 1em}
 .nav-laser[aria-pressed="true"]{color:var(--ink); border-color:#FF4D7A; box-shadow:0 0 0 3px rgba(255,77,122,.22)}
 .nav-laser:focus-visible{outline:2px solid var(--violet); outline-offset:2px}
 .theme svg{width:18px; height:18px; flex:none}
-.journey{font-size:14px; font-weight:600; color:var(--muted); white-space:nowrap}
-.nav ul a.seen::after{content:""; display:inline-block; width:6px; height:6px; margin-left:8px; border-radius:50%; background:var(--mint); vertical-align:2px}
+.journey{font-size:14px; font-weight:600; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; min-width:7.4em; text-align:right}
+@media (min-width:1241px){.nav .wrap{flex-wrap:nowrap}.nav nav{min-width:0}}
+.nav ul a{position:relative}
+.nav ul a.seen::after{content:""; position:absolute; right:3px; top:50%; width:6px; height:6px; margin-top:-3px; border-radius:50%; background:var(--mint); pointer-events:none}
 .progress{position:absolute; left:0; right:0; bottom:-1px; height:3px; background:transparent; pointer-events:none}
 .progress i{display:block; height:100%; width:100%; transform-origin:left; transform:scaleX(var(--scroll,0)); background:linear-gradient(90deg,#8A5CFF,#3F7BFF,#18C99A)}
 
