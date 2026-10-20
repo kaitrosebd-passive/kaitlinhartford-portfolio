@@ -566,7 +566,10 @@ html:has(.wr-dialog[open]){overflow:hidden}
 .rate{padding:36px 32px; display:flex; flex-direction:column; justify-content:center; border-radius:22px;
   background:linear-gradient(160deg,#2B1668,#143A7A 55%,#0C5A4A); border:1px solid rgba(192,168,255,.5)}
 .rate .small{font-weight:700; font-size:14px; letter-spacing:.1em; text-transform:uppercase; color:#E4DAFF; margin:0}
-.rate .price{font-family:var(--display); font-size:clamp(80px,10vw,120px); line-height:.95; color:#fff; margin:10px 0 0}
+.rate .price{font-family:var(--display); font-size:clamp(64px,8vw,96px); line-height:.95; color:#fff; margin:10px 0 0}
+.rate .pkgs{list-style:none; margin:20px 0 0; padding:0; display:grid; gap:14px}
+.rate .pkgs li{font-size:16px; line-height:1.45; color:#E4DAFF}
+.rate .pkgs b{display:block; color:#fff; font-size:17px}
 .rate .price small{font-family:var(--body); font-size:.24em; font-weight:700; letter-spacing:.04em; color:#E4DAFF}
 .rate p{margin:16px 0 0; font-size:18px; color:#E4DAFF}
 .rate .btn{margin-top:22px; align-self:flex-start}
@@ -1210,7 +1213,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px
         <p class="eyebrow">Consulting</p>
         <h2 id="consult-h">Contract product work for creative and entertainment teams</h2>
       </div>
-      <p class="areas reveal">Open to creator and entertainment products, and to any platform with customers, payments, risk or internal tools.</p>
+      <p class="areas reveal">Open to creator and entertainment products, and to any platform with customers, payments, risk or internal tools. I bring 20+ years of working directly with customers, from theme park registers to Netflix's contact center to product at CD Baby.</p>
       <div class="consult">
         <div class="glass offers reveal">
           <div><h3>Customer discovery and requirements</h3><p>Shadow customers and frontline teams, turn messy asks into scoped requirements, and prototype before engineering starts.</p></div>
@@ -1220,9 +1223,15 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px
           <div><h3>Launches, pricing and conversion</h3><p>0-to-1 services, upsell placement, onboarding and checkout.</p></div>
         </div>
         <aside class="rate reveal" aria-label="Consulting rate">
-          <p class="small">Current rate</p>
-          <p class="price">$200<small> / hour</small></p>
-          <p>Rates are negotiable. Send the scope and timeline and we'll agree on terms.</p>
+          <p class="small">Hourly rate</p>
+          <p class="price">$175<small> / hour</small></p>
+          <p>Most projects are scoped at a fixed price, so you know the cost before we start.</p>
+          <ul class="pkgs">
+            <li><b>Customer insight audit, from $3,000</b>One to two weeks with your support and operations teams, ending in a ranked list of what to fix first.</li>
+            <li><b>Monthly advisory, from $2,500</b>Regular calls plus async access for product decisions.</li>
+            <li><b>Embedded product partner, from $7,000 a month</b>About two days a week inside your team.</li>
+          </ul>
+          <p>Send the scope and timeline and I will tell you which fits best.</p>
           <a class="btn solid" href="#contact" data-reason="consulting">Ask about consulting</a>
         </aside>
       </div>
