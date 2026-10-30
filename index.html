@@ -579,6 +579,7 @@ html:has(.wr-dialog[open]){overflow:hidden}
 .rate .pkgs b{display:block; color:#fff; font-size:17px}
 .rate .price small{font-family:var(--body); font-size:.24em; font-weight:700; letter-spacing:.04em; color:#E4DAFF}
 .rate p{margin:16px 0 0; font-size:18px; color:#E4DAFF}
+.rate .rate-note{font-size:15px; opacity:.85; padding-top:14px; border-top:1px solid rgba(228,218,255,.25)}
 .rate .btn{margin-top:22px; align-self:flex-start}
 .rate .btn.solid{background:#C0A8FF; border-color:#C0A8FF; color:#12071F}
 .rate .btn.solid:hover{background:#D6C6FF; border-color:#D6C6FF}
@@ -1253,15 +1254,16 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px
           <div><h3>Rights, payouts and consent for creators</h3><p>Licensing and royalty flows, payout changes without support spikes, and opt-in design that keeps creators in control.</p></div>
           <div><h3>Launches, pricing and conversion</h3><p>0-to-1 services, upsell placement, onboarding and checkout.</p></div>
         </div>
-        <aside class="rate reveal" aria-label="Consulting rate">
-          <p class="small">Hourly rate</p>
-          <p class="price">$175<small> / hour</small></p>
-          <p>Most projects are scoped at a fixed price, so you know the cost before we start.</p>
+        <aside class="rate reveal" aria-label="Consulting packages and pricing">
+          <p class="small">Fixed-price projects</p>
+          <p class="price"><small>from </small>$2,500</p>
+          <p>Every project is scoped up front with a fixed price and timeline, so you know the cost and the outcome before we start.</p>
           <ul class="pkgs">
             <li><b>Customer insight audit, from $3,000</b>One to two weeks with your support and operations teams, ending in a ranked list of what to fix first.</li>
-            <li><b>Monthly advisory, from $2,500</b>Regular calls plus async access for product decisions.</li>
+            <li><b>Monthly advisory, from $2,500 a month</b>Regular calls plus async access for product decisions.</li>
             <li><b>Embedded product partner, from $7,000 a month</b>About two days a week inside your team.</li>
           </ul>
+          <p class="rate-note">Smaller requests outside a project are billed at $175 an hour in 10-hour blocks.</p>
           <p>Send the scope and timeline and I will tell you which fits best.</p>
           <a class="btn solid" href="#contact" data-reason="consulting">Ask about consulting</a>
         </aside>
